@@ -1,11 +1,31 @@
-import React, {FunctionComponent} from 'react';
-import {TestComponent} from '../test-component';
+import React, {FunctionComponent, useEffect} from 'react';
 
-export const App: FunctionComponent = () => {
+import appStyles from './app.module.css';
+
+// import {TestComponent} from '../test-component';
+import {WarshipsInfoContainer} from '../warships-info-container/warships-info-container';
+import {getWarshipsData} from '../../services/actions/warships-data';
+import {useAppDispatch} from '../../types/hooks';
+// import {TestComponent} from '../test-component';
+
+const App: FunctionComponent = () => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getWarshipsData());
+  }, [])
+
   return (
-    <div>
-      <h1>Warships</h1>
-      <TestComponent/>
+    <div className={appStyles.wrap}>
+      <header className={appStyles.header}>
+        <h1 className={appStyles.header__text}>Warships</h1>
+      </header>
+      <main>
+        <WarshipsInfoContainer/>
+        {/*<TestComponent/>*/}
+      </main>
     </div>
   )
 }
+
+export default App;

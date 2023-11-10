@@ -4,10 +4,11 @@
   font-weight: 400;
 
   color-scheme: light dark;
+  /*color: #f0ed0f;*/
   color: rgba(255, 255, 255, 0.87);
   /*background-color: #242424;*/
-  background: linear-gradient(rgba(112, 128, 144, .5), rgba(36, 36, 36, .9)),
-  center center url(./src/images/manu-schwendener-DSwBHyWKiVw-unsplash.jpg);
+  background: linear-gradient(rgba(112, 128, 144, .6), rgba(36, 36, 36, .9)),
+              center center url(./src/images/manu-schwendener-DSwBHyWKiVw-unsplash.jpg);
   background-size: contain;
 
   font-synthesis: none;
@@ -18,9 +19,7 @@
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
+  margin: 0 auto;
   min-width: 320px;
   min-height: 100vh;
 }

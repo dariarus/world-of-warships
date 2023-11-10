@@ -6,7 +6,7 @@ import './style.css'
 
 import {store} from './services/store';
 
-import {App} from './components/app/app';
+import App from './components/app/app';
 
 const app = ReactDOM.createRoot(
   document.getElementById('app') as HTMLElement

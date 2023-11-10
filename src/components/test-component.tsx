@@ -52,6 +52,7 @@ export const TestComponent: FunctionComponent = () => {
             <img src={warship.type.icons.default}/>
             <h4>{warship.nation.name}</h4>
             <p>{warship.nation.title}</p>
+            <p>{warship.nation.color}</p>
             <img src={warship.nation.icons.large}/>
           </div>
         ))

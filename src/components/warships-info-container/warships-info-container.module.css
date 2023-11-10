@@ -1,0 +1,63 @@
+.content {
+  display: flex;
+  gap: 40px;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 30px 0;
+
+}
+
+.image-wrap {
+  width: 870px;
+  height: 400px;
+  overflow: hidden;
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: auto;
+}
+
+.image {
+  object-fit: cover;
+  object-position: bottom;
+}
+
+.image_warship {
+  margin: -100px 0 0 0;
+}
+
+.info-wrap {
+  flex-basis: 40%;
+  padding: 30px;
+}
+
+.text {
+  margin: 0;
+  font-family: 'Roboto', 'Arial', sans-serif;
+  text-shadow: 0 0 10px #242424;
+}
+
+.text_header {
+  margin: 0 10px 0 0;
+  font-weight: 700;
+  font-size: 35px;
+  line-height: 37px;
+}
+
+.text_heading {
+  font-weight: 500;
+  font-size: 25px;
+  line-height: 30px;
+}
+
+.text_paragraph {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 25px;
+}
+
+.info-container {
+  display: flex;
+  align-items: center;
+  gap: 0 7px;
+  margin-bottom: 10px;
+}
