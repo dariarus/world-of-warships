@@ -6,6 +6,7 @@ import appStyles from './app.module.css';
 import {WarshipsInfoContainer} from '../warships-info-container/warships-info-container';
 import {getWarshipsData} from '../../services/actions/warships-data';
 import {useAppDispatch} from '../../types/hooks';
+import {Slider} from '../slider/slider';
 // import {TestComponent} from '../test-component';
 
 const App: FunctionComponent = () => {
@@ -23,6 +24,7 @@ const App: FunctionComponent = () => {
       <main>
         <WarshipsInfoContainer/>
         {/*<TestComponent/>*/}
+        <Slider/>
       </main>
     </div>
   )

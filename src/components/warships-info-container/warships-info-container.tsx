@@ -16,8 +16,7 @@ export const WarshipsInfoContainer: FunctionComponent = () => {
         className={infoStyles['image-wrap']}
         style={{
           backgroundImage: `url(${(warshipsDataState.warships[0].nation.icons?.large || '')})`,
-        }}
-      >
+        }}>
         <img
           src={warshipsDataState.warships[0].icons?.large}
           alt="Warship image"
@@ -30,7 +29,7 @@ export const WarshipsInfoContainer: FunctionComponent = () => {
         </div>
         <div className={infoStyles['info-container']}>
           <img src={warshipsDataState.warships[0].type.icons.default} alt="Warship's type image"/>
-          <p className={`${infoStyles.text} ${infoStyles.text_heading}`}>{warshipsDataState.warships[0].type.title}</p>
+          <p className={`${infoStyles.text} ${infoStyles.text_paragraph}`}>{warshipsDataState.warships[0].type.title},</p>
           <p className={`${infoStyles.text} ${infoStyles.text_paragraph}`}>level {warshipsDataState.warships[0].level}</p>
         </div>
         <p className={`${infoStyles.text} ${infoStyles.text_paragraph}`}>{warshipsDataState.warships[0].description}</p>
