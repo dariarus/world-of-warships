@@ -1,4 +1,5 @@
-export type TWarships = {
+export type TWarship = {
+  id: string,
   title: string,
   description: string,
   icons: {
@@ -28,9 +29,10 @@ export type TWarships = {
 export type TError = {
   message?: string
 };
-export interface IWarshipsDataState {
-  isLoading: boolean,
-  warships: Array<TWarships>,
-  isError: boolean,
-  error: TError
-}
+
+// export interface IWarshipsDataState {
+//   isLoading: boolean,
+//   warships: Array<TWarships>,
+//   isError: boolean,
+//   error: TError
+// }

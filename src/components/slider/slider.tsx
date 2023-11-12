@@ -4,10 +4,16 @@ import sliderStyles from './slider.module.css';
 
 import {SliderItem} from '../slider-item/slider-item';
 
-export const Slider: FunctionComponent = () => {
+import {TWarship} from '../../types/data';
+
+export const Slider: FunctionComponent<{ warships: TWarship[] }> = (props) => {
   return (
     <div className={sliderStyles.slider}>
-      <SliderItem/>
+      {
+        props.warships.map(item => (
+          <SliderItem key={item.id} warship={item}/>
+        ))
+      }
     </div>
   )
 }
