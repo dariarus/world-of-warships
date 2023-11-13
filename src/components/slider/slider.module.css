@@ -1,4 +1,30 @@
-.slider {
+.slider-container {
+  display: flex;
+  box-sizing: border-box;
+  gap: 20px;
+  justify-content: center;
+}
+
+.slider-outer-window {
+  overflow: hidden;
+  max-width: 1400px;
+}
+
+.slider-inner-window {
   display: flex;
   gap: 0 10px;
+  box-sizing: border-box;
+  transition: transform .3s ease-in-out;
+}
+
+.button {
+  all: unset;
+  display: block;
+  width: 30px;
+  min-height: 100%;
+  background-color: #FF6347;
+}
+
+.button_left {
+
 }

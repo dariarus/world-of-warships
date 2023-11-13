@@ -1,12 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {Provider} from 'mobx-react';
-//
-import mainStore from '../src/stores/index';
 
-import './style.css'
-
-// import * as mainStore from './services/store';
+import './style.css';
 
 import App from './components/app/app';
 import warshipsStore from './stores/warships-store';

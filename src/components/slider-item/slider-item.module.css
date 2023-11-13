@@ -20,11 +20,16 @@
   font-family: 'Roboto', 'Arial', sans-serif;
   font-weight: 500;
   font-size: 18px;
-  line-height: 25px;
+  line-height: 20px;
+}
+
+.text_small {
+  font-size: 15px;
 }
 
 .text_upper-case {
   text-transform: uppercase;
+  text-align: end;
 }
 
 .image {
@@ -50,6 +55,7 @@
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
+  align-items: flex-end;
   padding: 0 8px 5px;
   width: 100%;
 }

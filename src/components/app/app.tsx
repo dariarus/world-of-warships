@@ -15,6 +15,8 @@ const App: FunctionComponent = observer(() => {
   }, [])
 
   // const myTodos = new TodoStore()
+  const getWS = warshipsStore.wships
+  console.log(getWS)
 
   return (
     <div className={appStyles.wrap}>
@@ -23,7 +25,7 @@ const App: FunctionComponent = observer(() => {
       </header>
       <main>
         <WarshipsInfoContainer warships={warshipsStore.warships}/>
-        <Slider warships={warshipsStore.warships}/>
+        <Slider warships={getWS}/>
       </main>
     </div>
   )

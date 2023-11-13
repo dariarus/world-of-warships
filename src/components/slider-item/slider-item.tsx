@@ -5,7 +5,7 @@ import {TWarship} from '../../types/data';
 
 // import {useSelector} from '../../types/hooks';
 
-export const SliderItem: FunctionComponent<{warship: TWarship}> = (props) => {
+export const SliderItem: FunctionComponent<{ warship: TWarship }> = (props) => {
 
   return (
     props.warship &&
@@ -29,8 +29,16 @@ export const SliderItem: FunctionComponent<{warship: TWarship}> = (props) => {
         className={`${sliderItemStyles.image} ${sliderItemStyles.image_warship}`}
       />
       <div className={sliderItemStyles['item__title-nation-container']}>
-        <p className={sliderItemStyles.text}>{props.warship.nation.title}</p>
-        <p className={`${sliderItemStyles.text} ${sliderItemStyles['text_upper-case']}`}>{props.warship.title}</p>
+        <p className={
+          props.warship.nation.title.length <= 10
+            ? `${sliderItemStyles.text}`
+            : `${sliderItemStyles.text} ${sliderItemStyles.text_small}`
+        }>{props.warship.nation.title}</p>
+        <p className={
+          props.warship.title.length <= 7
+            ? `${sliderItemStyles.text} ${sliderItemStyles['text_upper-case']}`
+            : `${sliderItemStyles.text} ${sliderItemStyles.text_small} ${sliderItemStyles['text_upper-case']}`
+        }>{props.warship.title}</p>
       </div>
     </div>
   )
