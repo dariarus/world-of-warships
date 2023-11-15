@@ -1,111 +1,99 @@
-import React, {FunctionComponent, useCallback, useEffect, useState} from 'react';
+import React, {FunctionComponent, useEffect, useState} from 'react';
 
 import sliderStyles from './slider.module.css';
 
 import {SliderItem} from '../slider-item/slider-item';
 
 import {TWarship} from '../../types/data';
-import {getHashes} from 'crypto';
-import {act} from 'react-dom/test-utils';
+import {fullWindowWidth, widthOfOneElement} from '../../utils/constants';
 
 export const Slider: FunctionComponent<{ warships: TWarship[] }> = (props) => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
-  const [restLength, setRestLength] = useState<number>(3080);
-  const [position, setPosition] = useState<number>(0)
-  const [translate, setTranslate] = useState<number>(0);
-  console.log(restLength)
-  console.log(activeIndex)
+  const [restWidth, setRestWidth] = useState<number>(0);
+  const [fullTranslate, setFullTranslate] = useState<number>(0);
 
-  const fullWindowLength = 1400;
-  const widthOfOneElement = 220
-  const widthOfTwoElements = widthOfOneElement  * 2;
-  const widthOf6Elements = widthOfOneElement * 6;
-  const fullLength = props.warships.length * widthOf6Elements / 6;
-  // const lastPosition = fullLength - widthOf6Elements
-  const lastPosition = fullLength - fullWindowLength
+  // Значения сдвигов
+  const translateWidth = widthOfOneElement * 2;
+  const translateWidthInPercents = translateWidth * 100 / fullWindowWidth;
+  // Общая длина входящего массива в px
+  const fullWidth = props.warships.length * widthOfOneElement;
+  // Сдвиг в процентах относительно общей длины
+  // 1. Общая длина в процентах от длины окна (окно видимости 1400px берем за 100%, значит, общая будет 314,3% для 20 элементов)
+  const fullWidthInPercentsRelativelyWindowWidth = fullWidth * 100 / fullWindowWidth;
+  // 2. Сдвиг в процентах относительно общей длины
+  /* (если translateWidthInPercents = 31,4% от длины видимого окна, то 31,4% будут эквиваленты 10% от общей fullWidth */
+  const translateInPercentsRelativelyFullWidth = fullWidthInPercentsRelativelyWindowWidth / translateWidthInPercents;
+  // Сдвиг в пикселях относительно общей длины
+  const translateRelativelyFullWidth = fullWidth * translateInPercentsRelativelyFullWidth / 100;
 
-  console.log('lP:', lastPosition)
+  // Длина элементов массива в px, которая остается за областью видимости при загрузке страницы и далее после каждого смещения
+  const initialRestWidth = fullWidth - fullWindowWidth;
+  let restWidthOutOfViewArea = fullWidth - fullWindowWidth;
+
+  // Устанавливаем количество смещений, т.е. "страницу" по счету, которая отображается в области видимости в данный момент
+  // (это по 6 полных элементов, плюс половинка следующего). Сдвигаемся по клику на длину двух полных элементов
+  /* (activeIndex = 0 - отображаются от 0 до 6 и еще половинка 7го.
+  activeIndex = 1 - отображаются от 2 до 7 и еще половинка 8го.
+  Отображение зависит от сдвига */
+  // Максимальное количество сдвигов для рассчитанной длины всех элементов входящего массива
+  const maxIndex = (fullWidth - fullWindowWidth) / translateWidth;
   const setNewIndex = (newIndex: number) => {
-    if ((newIndex - 1) * widthOfTwoElements > fullLength - fullWindowLength) {
-      return
+    if (newIndex > maxIndex) {
+      newIndex = maxIndex;
     }
     if (newIndex < 0) {
       newIndex = 0;
     }
-      setActiveIndex(newIndex);
+    setActiveIndex(newIndex);
   }
 
-  let restLengthOutOfViewArea = fullLength - 1400
-
-  // useEffect(() => {
-  //   if (restLength < (fullLength * 10 / 100)) {
-  //     setTranslate(translate + 5)
-  //   } else {
-  //     setTranslate(translate + 31.4)
-  //   }
-  // }, [restLength])
-  // let translate = setTranslate();
-
-  // let fullTranslate = activeIndex * translate
-
-  const setRestLengthInPxClickRight = () => {
-    restLengthOutOfViewArea = restLength - (fullLength * 10 / 100)
-    // if (restLengthOutOfViewArea <= 0) {
-    //   setRestLength(0);
-    //   return
-    // }
-    setRestLength(restLengthOutOfViewArea)
+  const setRestWidthInPxClickRight = () => {
+    restWidthOutOfViewArea = restWidth - (fullWidth * 10 / 100)
+    if (restWidthOutOfViewArea <= 0) {
+      setRestWidth(0);
+      return
+    }
+    setRestWidth(restWidthOutOfViewArea);
   }
 
-  const setRestLengthInPxClickLeft = () => {
-    restLengthOutOfViewArea = restLength + (fullLength * 10 / 100)
-    setRestLength(restLengthOutOfViewArea)
+  const setRestWidthInPxClickLeft = () => {
+    restWidthOutOfViewArea = restWidth + (fullWidth * 10 / 100)
+    if (restWidthOutOfViewArea >= initialRestWidth) {
+      setRestWidth(initialRestWidth);
+      return
+    }
+    setRestWidth(restWidthOutOfViewArea);
   }
 
-
-  // useEffect(() => {
-  //   const maxLength = 4400
-  //   setTranslate(Math.min(translate + 31.4, maxLength))
-  //   console.log('maxLength:', maxLength)
-  // }, [activeIndex])
-
-  // useEffect(() => {
-  //   if (restLength - (fullLength * 10 / 100) === 0) {
-  //     setActiveIndex(activeIndex * translate + 1)
-  //   }
-  // }, [translate])
-
+  // Установка изначально остающейся за областью видимости длины после загрузки массива кораблей
   useEffect(() => {
-    setPosition(Math.min(activeIndex * widthOfTwoElements, lastPosition))
+    setRestWidth(initialRestWidth)
+  }, [props.warships])
+
+  // Настройка сдвига при обычных условиях и последний раз, когда нельзя сдвинуться на заданное значение translateWidthInPercents
+  // (когда на сдвиг остается меньше места, чем указано в translateWidthInPercents)
+  useEffect(() => {
+    if (restWidth + translateRelativelyFullWidth < translateRelativelyFullWidth) {
+      setFullTranslate(maxIndex * translateWidthInPercents);
+    } else {
+      setFullTranslate(activeIndex * translateWidthInPercents)
+    }
   }, [activeIndex])
-
-  useEffect(() => {
-    console.log('restLength: ', restLength)
-  }, [restLength])
-
-  useEffect(() => {
-    console.log('activeInd: ', activeIndex)
-  }, [activeIndex])
-
-  useEffect(() => {
-    console.log('activeInd x translate: ', activeIndex * translate)
-  }, [activeIndex, translate])
-
 
   return (
     <div className={sliderStyles['slider-container']}>
       <button
         className={`${sliderStyles.button} ${sliderStyles.button_left}`}
         onClick={() => {
-          setNewIndex(activeIndex - 1)
-          setRestLengthInPxClickLeft()
+          setNewIndex(activeIndex - 1);
+          setRestWidthInPxClickLeft();
         }}
       />
       <div className={sliderStyles['slider-outer-window']}>
         <div
           className={sliderStyles['slider-inner-window']}
           style={{
-            transform: `translateX(-${position}px)`
+            transform: `translateX(-${fullTranslate}%)`
           }}
         >
           {
@@ -118,8 +106,8 @@ export const Slider: FunctionComponent<{ warships: TWarship[] }> = (props) => {
       <button
         className={`${sliderStyles.button} ${sliderStyles.button_right}`}
         onClick={() => {
-          setNewIndex(activeIndex + 1)
-          setRestLengthInPxClickRight()
+          setNewIndex(activeIndex + 1);
+          setRestWidthInPxClickRight();
         }}
       />
     </div>
