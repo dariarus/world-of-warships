@@ -6,7 +6,7 @@
   width: 100%;
   padding: 10px 0;
   /*background: linear-gradient(0.25turn, #696969, #708090, #696969);*/
-  background: linear-gradient(0.25turn, #696969, #708090, #696969);
+  /*background: linear-gradient(0.25turn, #696969, #708090, #696969);*/
 }
 
 .header__text {
@@ -16,5 +16,14 @@
   font-size: 40px;
   line-height: 42px;
   text-align: center;
-  color: #FF6347;
+  color: #fff;
+}
+
+.header__decor {
+  margin: 0 auto;
+  display: block;
+  width: 50%;
+  height: 3px;
+  background-color: #fff;
+  border-radius: 80%;
 }

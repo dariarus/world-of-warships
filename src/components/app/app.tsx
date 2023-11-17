@@ -31,6 +31,7 @@ const App: FunctionComponent = observer(() => {
       <header className={appStyles.header}>
         <h1 className={appStyles.header__text}>Warships</h1>
       </header>
+      <span className={appStyles.header__decor}/>
       <main>
         <WarshipsInfoContainer warships={warshipsDataStore.warships}/>
         <Slider sliderItemStores={mainStore.sliderItemStores}/>
