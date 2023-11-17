@@ -7,7 +7,7 @@
 
 .slider-outer-window {
   overflow: hidden;
-  max-width: 1400px;
+  width: 1400px;
 }
 
 .slider-inner-window {
@@ -22,9 +22,26 @@
   display: block;
   width: 30px;
   min-height: 100%;
-  background-color: #FF6347;
+  transition: background-color .3s;
+}
+
+.button:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, .3);
+  cursor: pointer;
+}
+
+.button:active:not(:disabled) {
+  background-color: rgba(255, 255, 255, .7);
+}
+
+.button:disabled {
+  opacity: .2;
 }
 
 .button_left {
+  background: url(../../images/arrow-left.svg) center center no-repeat;
+}
 
+.button_right {
+  background: url(../../images/arrow-right.svg) center center no-repeat;
 }

@@ -5,8 +5,8 @@ import {WARSHIPS_API_URL} from '../utils/constants';
 
 import {getResponseData} from '../utils/functions';
 
-// Класс экспортируется для того, чтобы импортировать его как _тип_ стейта warshipsStore, используемого в компонентах React
-export class WarshipsStore {
+// Класс экспортируется для того, чтобы импортировать его как _тип_ стейта warshipsDataStore, используемого в компонентах React
+export class WarshipsDataStore {
   isLoading: boolean = false;
   warships: TWarship[] = [];
   isError: boolean = false;
@@ -86,6 +86,6 @@ export class WarshipsStore {
   }
 }
 
-const warshipsStore = new WarshipsStore();
+const warshipsDataStore = new WarshipsDataStore();
 
-export default warshipsStore;
+export default warshipsDataStore;

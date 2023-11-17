@@ -5,11 +5,14 @@ import {Provider} from 'mobx-react';
 import './style.css';
 
 import App from './components/app/app';
-import warshipsStore from './stores/warships-store';
+
+import mainStore from './stores';
+import warshipsDataStore from './stores/warships-data-store';
 
 const stores = {
-  // mainStore,
-  warshipsStore
+  mainStore,
+  warshipsDataStore,
+  sliderItemStore: mainStore.sliderItemStores,
 };
 
 const app = ReactDOM.createRoot(

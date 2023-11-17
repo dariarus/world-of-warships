@@ -6,17 +6,25 @@ import appStyles from './app.module.css';
 import {WarshipsInfoContainer} from '../warships-info-container/warships-info-container';
 import {Slider} from '../slider/slider';
 
-import warshipsStore from '../../stores/warships-store';
+import mainStore from '../../stores';
+import warshipsDataStore from '../../stores/warships-data-store';
+import {SliderItemStore} from '../../stores/slider-item-store';
 
 const App: FunctionComponent = observer(() => {
-  // const dispatch = useAppDispatch();
   useEffect(() => {
-    warshipsStore.loadFromServer();
+    warshipsDataStore.loadFromServer();
   }, [])
 
-  // const myTodos = new TodoStore()
-  const getWS = warshipsStore.wships
-  console.log(getWS)
+  useEffect(() => {
+    updateSliderItemStore();
+  }, [warshipsDataStore.wships])
+
+  const updateSliderItemStore = () => {
+    // 1. Добавляем каждому warship-у, полученному с сервера, состояние isActive
+    const sliderItemStore = warshipsDataStore.wships.map(item => new SliderItemStore(item));
+    // 2. Инициализируем массив с хранилищами SliderItemStore и сохраняем в основном сторе (mainStore)
+    mainStore.setSliderItemStores(sliderItemStore);
+  }
 
   return (
     <div className={appStyles.wrap}>
@@ -24,28 +32,11 @@ const App: FunctionComponent = observer(() => {
         <h1 className={appStyles.header__text}>Warships</h1>
       </header>
       <main>
-        <WarshipsInfoContainer warships={warshipsStore.warships}/>
-        <Slider warships={getWS}/>
+        <WarshipsInfoContainer warships={warshipsDataStore.warships}/>
+        <Slider sliderItemStores={mainStore.sliderItemStores}/>
       </main>
     </div>
   )
 })
 
 export default App;
-
-
-// import React from 'react';
-// import { observer } from 'mobx-react-lite';
-// import TodoList from '../test-to-do';
-//
-//
-// const App = observer(() => {
-//   return (
-//     <div>
-//       <h1>My Todo App</h1>
-//       <TodoList />
-//     </div>
-//   );
-// });
-//
-// export default App;

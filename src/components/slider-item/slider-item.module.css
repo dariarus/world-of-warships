@@ -1,12 +1,19 @@
 .item {
+  all: unset;
   position: relative;
+  box-sizing: border-box;
   padding: 5px;
-  min-width: 200px;
-  height: 100px;
+  min-width: 210px;
+  height: 100%;
   overflow: hidden;
   background-position: top left;
   background-repeat: no-repeat;
   background-size: contain;
+  border: 1px solid transparent;
+}
+
+.item_active {
+  border: 1px solid rgba(255, 255, 255, .5)
 }
 
 .item__type-level-container {
@@ -19,12 +26,8 @@
   margin: 0;
   font-family: 'Roboto', 'Arial', sans-serif;
   font-weight: 500;
-  font-size: 18px;
-  line-height: 20px;
-}
-
-.text_small {
   font-size: 15px;
+  line-height: 20px;
 }
 
 .text_upper-case {

@@ -1,13 +1,15 @@
 import React, {FunctionComponent, useEffect, useState} from 'react';
+import {observer} from 'mobx-react-lite';
 
 import sliderStyles from './slider.module.css';
 
 import {SliderItem} from '../slider-item/slider-item';
 
-import {TWarship} from '../../types/data';
 import {fullWindowWidth, widthOfOneElement} from '../../utils/constants';
+import {SliderItemStore} from '../../stores/slider-item-store';
+import sliderStore from '../../stores/slider-store';
 
-export const Slider: FunctionComponent<{ warships: TWarship[] }> = (props) => {
+export const Slider: FunctionComponent<{ sliderItemStores: SliderItemStore[] }> = observer((props) => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [restWidth, setRestWidth] = useState<number>(0);
   const [fullTranslate, setFullTranslate] = useState<number>(0);
@@ -16,12 +18,12 @@ export const Slider: FunctionComponent<{ warships: TWarship[] }> = (props) => {
   const translateWidth = widthOfOneElement * 2;
   const translateWidthInPercents = translateWidth * 100 / fullWindowWidth;
   // Общая длина входящего массива в px
-  const fullWidth = props.warships.length * widthOfOneElement;
+  const fullWidth = props.sliderItemStores.length * widthOfOneElement;
   // Сдвиг в процентах относительно общей длины
   // 1. Общая длина в процентах от длины окна (окно видимости 1400px берем за 100%, значит, общая будет 314,3% для 20 элементов)
   const fullWidthInPercentsRelativelyWindowWidth = fullWidth * 100 / fullWindowWidth;
   // 2. Сдвиг в процентах относительно общей длины
-  /* (если translateWidthInPercents = 31,4% от длины видимого окна, то 31,4% будут эквиваленты 10% от общей fullWidth */
+  // (если translateWidthInPercents = 31,4% от длины видимого окна, то 31,4% будут эквиваленты 10% от общей fullWidth
   const translateInPercentsRelativelyFullWidth = fullWidthInPercentsRelativelyWindowWidth / translateWidthInPercents;
   // Сдвиг в пикселях относительно общей длины
   const translateRelativelyFullWidth = fullWidth * translateInPercentsRelativelyFullWidth / 100;
@@ -37,6 +39,23 @@ export const Slider: FunctionComponent<{ warships: TWarship[] }> = (props) => {
   Отображение зависит от сдвига */
   // Максимальное количество сдвигов для рассчитанной длины всех элементов входящего массива
   const maxIndex = (fullWidth - fullWindowWidth) / translateWidth;
+
+  // Установка изначально остающейся за областью видимости длины после загрузки массива кораблей
+  useEffect(() => {
+    setRestWidth(initialRestWidth)
+  }, [props.sliderItemStores])
+
+  // Настройка сдвига при обычных условиях и последний раз, когда нельзя сдвинуться на заданное значение translateWidthInPercents
+  // (когда на сдвиг остается меньше места, чем указано в translateWidthInPercents)
+  useEffect(() => {
+    if (restWidth + translateRelativelyFullWidth < translateRelativelyFullWidth) {
+      setFullTranslate(maxIndex * translateWidthInPercents);
+    } else {
+      setFullTranslate(activeIndex * translateWidthInPercents)
+    }
+  }, [activeIndex])
+
+  // Установка индекса при клике вперед-назад
   const setNewIndex = (newIndex: number) => {
     if (newIndex > maxIndex) {
       newIndex = maxIndex;
@@ -65,25 +84,11 @@ export const Slider: FunctionComponent<{ warships: TWarship[] }> = (props) => {
     setRestWidth(restWidthOutOfViewArea);
   }
 
-  // Установка изначально остающейся за областью видимости длины после загрузки массива кораблей
-  useEffect(() => {
-    setRestWidth(initialRestWidth)
-  }, [props.warships])
-
-  // Настройка сдвига при обычных условиях и последний раз, когда нельзя сдвинуться на заданное значение translateWidthInPercents
-  // (когда на сдвиг остается меньше места, чем указано в translateWidthInPercents)
-  useEffect(() => {
-    if (restWidth + translateRelativelyFullWidth < translateRelativelyFullWidth) {
-      setFullTranslate(maxIndex * translateWidthInPercents);
-    } else {
-      setFullTranslate(activeIndex * translateWidthInPercents)
-    }
-  }, [activeIndex])
-
   return (
     <div className={sliderStyles['slider-container']}>
       <button
         className={`${sliderStyles.button} ${sliderStyles.button_left}`}
+        disabled={activeIndex === 0}
         onClick={() => {
           setNewIndex(activeIndex - 1);
           setRestWidthInPxClickLeft();
@@ -97,14 +102,22 @@ export const Slider: FunctionComponent<{ warships: TWarship[] }> = (props) => {
           }}
         >
           {
-            props.warships.map((item, index) => (
-              <SliderItem key={item.id} warship={item} index={index}/>
-            ))
+            props.sliderItemStores
+              .map((item) => (
+                <SliderItem
+                  key={item?.warship.id}
+                  sliderItemStore={item}
+                  // index={index}
+                  onClick={() => {
+                    sliderStore.setActiveItem(item);
+                  }}/>
+              ))
           }
         </div>
       </div>
       <button
         className={`${sliderStyles.button} ${sliderStyles.button_right}`}
+        disabled={activeIndex === maxIndex}
         onClick={() => {
           setNewIndex(activeIndex + 1);
           setRestWidthInPxClickRight();
@@ -112,4 +125,4 @@ export const Slider: FunctionComponent<{ warships: TWarship[] }> = (props) => {
       />
     </div>
   )
-}
+})
