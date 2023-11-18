@@ -9,14 +9,19 @@ export class SliderStore {
   }
 
   setActiveItem(newActiveItem: SliderItemStore) {
+    console.log('newActiveItem: ' , newActiveItem)
+    if (!newActiveItem) {
+      return;
+    }
     if (this.currentActiveItem) {
       this.currentActiveItem.setIsActive(false);
     }
     this.currentActiveItem = newActiveItem;
     this.currentActiveItem.setIsActive(true);
+    console.log('setActiveItem: ', this.currentActiveItem.isActive)
   }
 }
 
-const sliderStore = new SliderStore();
+// const sliderStore = new SliderStore();
 
-export default sliderStore
+// export default sliderStore

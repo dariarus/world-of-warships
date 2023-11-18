@@ -9,6 +9,7 @@ import {Slider} from '../slider/slider';
 import mainStore from '../../stores';
 import warshipsDataStore from '../../stores/warships-data-store';
 import {SliderItemStore} from '../../stores/slider-item-store';
+// import sliderStore from '../../stores/slider-store';
 
 const App: FunctionComponent = observer(() => {
   useEffect(() => {
@@ -16,14 +17,34 @@ const App: FunctionComponent = observer(() => {
   }, [])
 
   useEffect(() => {
-    updateSliderItemStore();
+    setSliderItemStore();
+    setDefaultActiveItem();
   }, [warshipsDataStore.wships])
 
-  const updateSliderItemStore = () => {
+  useEffect(() => {
+    if (!mainStore.sliderStore?.currentActiveItem && mainStore.sliderItemStores) {
+      mainStore.sliderStore.setActiveItem(mainStore.sliderItemStores[1])
+    }
+  }, [mainStore.sliderItemStores])
+
+  // useEffect(() => {
+  //   if (!sliderStore.currentActiveItem) {
+  //     sliderStore.setActiveItem(mainStore.sliderItemStores[0])
+  //   }
+  // }, [mainStore.sliderItemStores.length])
+
+  // TODO: убрать wships, заменить на список всех кораблей
+  const setSliderItemStore = () => {
     // 1. Добавляем каждому warship-у, полученному с сервера, состояние isActive
     const sliderItemStore = warshipsDataStore.wships.map(item => new SliderItemStore(item));
     // 2. Инициализируем массив с хранилищами SliderItemStore и сохраняем в основном сторе (mainStore)
-    mainStore.setSliderItemStores(sliderItemStore);
+    mainStore.initializeSliderItemStores(sliderItemStore);
+  }
+
+  const setDefaultActiveItem = () => {
+    if (!mainStore.sliderStore.currentActiveItem) {
+      mainStore.sliderStore.setActiveItem(mainStore.sliderItemStores[0])
+    }
   }
 
   return (
@@ -33,7 +54,7 @@ const App: FunctionComponent = observer(() => {
       </header>
       <span className={appStyles.header__decor}/>
       <main>
-        <WarshipsInfoContainer warships={warshipsDataStore.warships}/>
+        <WarshipsInfoContainer activeElement={mainStore.sliderStore.currentActiveItem}/>
         <Slider sliderItemStores={mainStore.sliderItemStores}/>
       </main>
     </div>

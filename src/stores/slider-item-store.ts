@@ -2,11 +2,12 @@ import {TWarship} from '../types/data';
 import {makeAutoObservable} from 'mobx';
 
 export class SliderItemStore {
-  isActive: boolean = false;
+  isActive: boolean;
   warship: TWarship;
   constructor(warship: TWarship) {
-    this.warship = warship;
     makeAutoObservable(this);
+    this.warship = warship;
+    this.isActive = false;
   }
 
   setIsActive(isActive: boolean) {

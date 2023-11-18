@@ -7,7 +7,7 @@ import {SliderItem} from '../slider-item/slider-item';
 
 import {fullWindowWidth, widthOfOneElement} from '../../utils/constants';
 import {SliderItemStore} from '../../stores/slider-item-store';
-import sliderStore from '../../stores/slider-store';
+// import sliderStore from '../../stores/slider-store';
 
 export const Slider: FunctionComponent<{ sliderItemStores: SliderItemStore[] }> = observer((props) => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
@@ -108,9 +108,7 @@ export const Slider: FunctionComponent<{ sliderItemStores: SliderItemStore[] }> 
                   key={item?.warship.id}
                   sliderItemStore={item}
                   // index={index}
-                  onClick={() => {
-                    sliderStore.setActiveItem(item);
-                  }}/>
+               />
               ))
           }
         </div>
