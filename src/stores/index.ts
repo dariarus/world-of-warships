@@ -3,17 +3,23 @@ import {makeAutoObservable} from 'mobx';
 import warshipsDataStore, {WarshipsDataStore} from './warships-data-store';
 import {SliderItemStore} from './slider-item-store';
 import {SliderStore} from './slider-store';
+import {FiltersFieldsDataStore} from './filters-fields-data-store';
+import {FiltersDataStore} from './filters-data-store';
 
 export class MainStore {
   warshipsDataStore: WarshipsDataStore;
   sliderStore: SliderStore;
-  sliderItemStores: SliderItemStore[]
+  sliderItemStores: SliderItemStore[];
+  filtersFieldsDataStore: FiltersFieldsDataStore;
+  filtersDataStore: FiltersDataStore
 
   constructor() {
     // Инициализация дочерних хранилищ
     this.warshipsDataStore = warshipsDataStore;
     this.sliderStore = new SliderStore();
     this.sliderItemStores = [];
+    this.filtersFieldsDataStore = new FiltersFieldsDataStore();
+    this.filtersDataStore = new FiltersDataStore();
     makeAutoObservable(this)
   }
 

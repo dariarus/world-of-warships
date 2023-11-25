@@ -88,7 +88,7 @@ export const Slider: FunctionComponent<{ sliderItemStores: SliderItemStore[] }> 
     <div className={sliderStyles['slider-container']}>
       <button
         className={`${sliderStyles.button} ${sliderStyles.button_left}`}
-        disabled={activeIndex === 0}
+        disabled={activeIndex === 0 || props.sliderItemStores.length < 1}
         onClick={() => {
           setNewIndex(activeIndex - 1);
           setRestWidthInPxClickLeft();
@@ -102,20 +102,23 @@ export const Slider: FunctionComponent<{ sliderItemStores: SliderItemStore[] }> 
           }}
         >
           {
-            props.sliderItemStores
+            props.sliderItemStores.length > 0
+            ? props.sliderItemStores
               .map((item) => (
                 <SliderItem
                   key={item?.warship.id}
                   sliderItemStore={item}
+                  isActive={item.isActive}
                   // index={index}
                />
               ))
+              : <p className={sliderStyles.text}>Nothing was found</p>
           }
         </div>
       </div>
       <button
         className={`${sliderStyles.button} ${sliderStyles.button_right}`}
-        disabled={activeIndex === maxIndex}
+        disabled={activeIndex === maxIndex || props.sliderItemStores.length < 1 || props.sliderItemStores.length < 6}
         onClick={() => {
           setNewIndex(activeIndex + 1);
           setRestWidthInPxClickRight();

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import {Provider} from 'mobx-react';
 
 import './style.css';
+import './fonts/fonts.css';
 
 import App from './components/app/app';
 
@@ -12,7 +13,10 @@ import warshipsDataStore from './stores/warships-data-store';
 const stores = {
   mainStore,
   warshipsDataStore,
+  sliderStore: mainStore.sliderStore,
   sliderItemStore: mainStore.sliderItemStores,
+  filtersDataStore: mainStore.filtersFieldsDataStore,
+  filtersFieldsDataStore: mainStore.filtersFieldsDataStore,
 };
 
 const app = ReactDOM.createRoot(

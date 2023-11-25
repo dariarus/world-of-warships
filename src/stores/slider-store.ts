@@ -1,5 +1,6 @@
 import {SliderItemStore} from './slider-item-store';
 import {makeAutoObservable} from 'mobx';
+// import mainStore from './index';
 
 export class SliderStore {
   currentActiveItem: SliderItemStore | null = null;
@@ -13,6 +14,10 @@ export class SliderStore {
     if (!newActiveItem) {
       return;
     }
+    // if (!this.currentActiveItem) {
+    //   this.currentActiveItem = mainStore.sliderItemStores[0];
+    //   this.currentActiveItem.setIsActive(true);
+    // }
     if (this.currentActiveItem) {
       this.currentActiveItem.setIsActive(false);
     }

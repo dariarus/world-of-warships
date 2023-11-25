@@ -6,7 +6,7 @@ import sliderItemStyles from './slider-item.module.css';
 import {SliderItemStore} from '../../stores/slider-item-store';
 import mainStore from '../../stores';
 
-export const SliderItem: FunctionComponent<{ sliderItemStore: SliderItemStore }> = observer(({sliderItemStore}) => {
+export const SliderItem: FunctionComponent<{ sliderItemStore: SliderItemStore, isActive: boolean }> = observer(({sliderItemStore, isActive}) => {
   useEffect(() => {
     console.log('component SliderItem: ', sliderItemStore.isActive)
   }, [])
@@ -15,7 +15,7 @@ export const SliderItem: FunctionComponent<{ sliderItemStore: SliderItemStore }>
     sliderItemStore &&
     <button
       className={
-        sliderItemStore.isActive
+        isActive
           ? `${sliderItemStyles.item} ${sliderItemStyles.item_active}`
           : `${sliderItemStyles.item}`}
       style={{

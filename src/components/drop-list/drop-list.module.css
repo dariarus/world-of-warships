@@ -1,0 +1,39 @@
+.label {
+  margin: 0 10px 0 0;
+  font-family: 'Roboto', 'Arial', sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  color: #fff;
+  text-shadow: 0 0 10px #242424;
+}
+
+.select {
+  width: 160px;
+  height: 35px;
+  padding: 7px 30px 7px 10px;
+  outline: none;
+  /*border-radius: 10px;*/
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: url(../../images/arrow-down.svg) 96% / 10% no-repeat rgba(36, 36, 36, .5);
+  font-family: 'Roboto', 'Arial', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18px;
+  color: #fff;
+}
+
+.select_level {
+  width: 70px;
+  background: url(../../images/arrow-down.svg) 94% / 20% no-repeat rgba(36, 36, 36, .5);
+}
+
+.select:focus {
+  outline: 1px solid rgba(225, 225, 225, .6);
+}
+
+select::-ms-expand {
+  display: none; /* удалить стрелку по умолчанию в IE 10 и 11 */
+}

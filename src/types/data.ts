@@ -6,7 +6,7 @@ export type TWarship = {
     large: string,
     medium: string
   },
-  level: null,
+  level: number,
   type: {
     name: string,
     title: string,

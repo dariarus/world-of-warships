@@ -14,6 +14,7 @@
   display: flex;
   gap: 0 10px;
   box-sizing: border-box;
+  min-height: 110px;
   transition: transform .3s ease-in-out;
 }
 
@@ -44,4 +45,10 @@
 
 .button_right {
   background: url(../../images/arrow-right.svg) center center no-repeat;
+}
+
+.text {
+  margin: 0 auto;
+  align-self: center;
+  /*min-height: 110px;*/
 }

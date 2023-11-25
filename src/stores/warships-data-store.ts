@@ -1,7 +1,7 @@
 import {TError, TWarship} from '../types/data';
 import {makeAutoObservable} from 'mobx';
 
-import {WARSHIPS_API_URL} from '../utils/constants';
+import {QUERY, WARSHIPS_API_URL} from '../utils/constants';
 
 import {getResponseData} from '../utils/functions';
 
@@ -44,35 +44,7 @@ export class WarshipsDataStore {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          query: `{
-            vehicles {
-              id
-              title
-              description
-              icons {
-                large
-                medium
-              }
-              level
-              type {
-                name
-                title
-                icons {
-                  default
-                }
-              }
-              nation {
-                name
-                title
-                color
-                icons {
-                  small
-                  medium
-                  large
-                }
-              }
-            }
-          }`
+          query: QUERY
         }),
       })
       .then(res => getResponseData<{ data: { vehicles: Array<TWarship> } }>(res))
