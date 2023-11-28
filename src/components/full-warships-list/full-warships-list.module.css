@@ -1,0 +1,67 @@
+.list-container {
+  /*display: flex;*/
+  flex-direction: column;
+  box-sizing: border-box;
+  padding-right: 10px;
+  overflow: auto;
+  max-height: 100%;
+  /*scrollbar-color: #fff transparent; !* «цвет ползунка» «цвет полосы скроллбара» *!*/
+  /*scrollbar-width: thin;*/
+}
+
+.list-container::-webkit-scrollbar {
+  width: 3px;
+  height: 0;
+  padding: 1px;
+  background-color: transparent;
+}
+
+/* ползунок скроллбара */
+.list-container::-webkit-scrollbar-thumb {
+  background-color: #fff;
+  border-radius: 50%;
+}
+
+.list {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: repeat(6, min-content);
+  gap: 20px 10px;
+  /*justify-content: center;*/
+  margin: 0;
+  padding: 0;
+  max-width: 1400px;
+  overflow: auto;
+  /*scrollbar-color: #fff transparent; !* «цвет ползунка» «цвет полосы скроллбара» *!*/
+  /*scrollbar-width: thin;*/
+}
+
+/*.list::-webkit-scrollbar {*/
+/*  width: 3px;*/
+/*  height: 0;*/
+/*  padding: 1px;*/
+/*  background-color: transparent;*/
+/*}*/
+
+/*!* ползунок скроллбара *!*/
+/*.list::-webkit-scrollbar-thumb {*/
+/*  background-color: #fff;*/
+/*  border-radius: 50%;*/
+
+/*}*/
+
+.list-item {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.text {
+  margin: 0 auto;
+  font-family: 'Roboto', 'Arial', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 22px;
+  text-align: center;
+  color: #fff;
+}

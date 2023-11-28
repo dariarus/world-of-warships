@@ -1,13 +1,16 @@
 .slider-container {
-  display: flex;
+  position: relative;
+  /*display: flex;*/
   box-sizing: border-box;
-  gap: 20px;
+  /*gap: 20px;*/
   justify-content: center;
+  /*max-width: 1400px;*/
 }
 
 .slider-outer-window {
+  /*box-sizing: border-box;*/
+  width: 1342px;
   overflow: hidden;
-  width: 1400px;
 }
 
 .slider-inner-window {
@@ -20,6 +23,7 @@
 
 .button {
   all: unset;
+  position: absolute;
   display: block;
   width: 30px;
   min-height: 100%;
@@ -40,15 +44,24 @@
 }
 
 .button_left {
+  left: -50px;
+  top: 0;
   background: url(../../images/arrow-left.svg) center center no-repeat;
 }
 
 .button_right {
+  right: -50px;
+  top: 0;
   background: url(../../images/arrow-right.svg) center center no-repeat;
 }
 
 .text {
   margin: 0 auto;
   align-self: center;
-  /*min-height: 110px;*/
+  font-family: 'Roboto', 'Arial', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 22px;
+  text-align: center;
+  color: #fff;
 }

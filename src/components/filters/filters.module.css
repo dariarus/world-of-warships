@@ -1,15 +1,17 @@
 .filters-wrap {
+  /*position: absolute;*/
+  /*left: 0;*/
+  /*bottom: 0;*/
+  align-self: flex-start;
   display: flex;
-  margin: 0 auto 20px;
+  margin: 0 0 20px;
   max-width: 1440px;
+  z-index: 5;
 }
 
 .filters-area {
   display: flex;
   gap: 20px;
-  
-  /*flex-basis: 45%;*/
-  
   justify-content: space-between;
 }
 

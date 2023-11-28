@@ -5,11 +5,12 @@ import appStyles from './app.module.css';
 
 import {WarshipsInfoContainer} from '../warships-info-container/warships-info-container';
 import {Slider} from '../slider/slider';
-import {Filters} from '../filters/filters';
 
 import mainStore from '../../stores';
 import warshipsDataStore from '../../stores/warships-data-store';
 import {SliderItemStore} from '../../stores/slider-item-store';
+import {Sidebar} from '../sidebar/sidebar';
+import {FullWarshipsList} from '../full-warships-list/full-warships-list';
 // import sliderStore from '../../stores/slider-store';
 
 const App: FunctionComponent = observer(() => {
@@ -65,12 +66,14 @@ const App: FunctionComponent = observer(() => {
       <header className={appStyles.header}>
         <h1 className={appStyles.header__text}>Warships</h1>
       </header>
-      <span className={appStyles.header__decor}/>
+      <span className={appStyles['header-decor']}/>
       <main>
         <WarshipsInfoContainer activeElement={mainStore.sliderStore.currentActiveItem}/>
         <section className={appStyles['warships-list']}>
-          <Filters/>
-          <Slider sliderItemStores={mainStore.sliderItemStores}/>
+          <Sidebar sidebarIsOpen={false} onClose={() => console.log('hi')}>
+            {/*<FullWarshipsList items={mainStore.sliderItemStores}/>*/}
+            <Slider sliderItemStores={mainStore.sliderItemStores}/>
+          </Sidebar>
         </section>
       </main>
     </div>
