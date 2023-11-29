@@ -14,7 +14,7 @@ export const FilterButton: FunctionComponent<TFilterButtonProps> = (props) => {
       disabled={props.isDisabled}
       className={props.name === 'Apply'
       ? `${filterButtonStyles.button} ${filterButtonStyles.button_light}`
-      : `${filterButtonStyles.button} ${filterButtonStyles.button_transparent}`
+      : `${filterButtonStyles.button} ${filterButtonStyles.button_dark}`
     }
       onClick={props.onClick}
     >

@@ -23,6 +23,7 @@ export const SliderItem: FunctionComponent<{ sliderItemStore: SliderItemStore, i
       }}
       onClick={() => {
         mainStore.sliderStore.setActiveItem(sliderItemStore);
+        mainStore.fullWarshipsListStore.setListIsClose();
       }}
     >
       <div className={sliderItemStyles['item__type-level-container']}>

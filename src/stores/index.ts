@@ -5,6 +5,7 @@ import {SliderItemStore} from './slider-item-store';
 import {SliderStore} from './slider-store';
 import {FiltersFieldsDataStore} from './filters-fields-data-store';
 import {FiltersDataStore} from './filters-data-store';
+import {FullWarshipsListStore} from './full-warships-list-store';
 
 export class MainStore {
   warshipsDataStore: WarshipsDataStore;
@@ -12,6 +13,7 @@ export class MainStore {
   sliderItemStores: SliderItemStore[];
   filtersFieldsDataStore: FiltersFieldsDataStore;
   filtersDataStore: FiltersDataStore
+  fullWarshipsListStore: FullWarshipsListStore
 
   constructor() {
     // Инициализация дочерних хранилищ
@@ -20,11 +22,12 @@ export class MainStore {
     this.sliderItemStores = [];
     this.filtersFieldsDataStore = new FiltersFieldsDataStore();
     this.filtersDataStore = new FiltersDataStore();
+    this.fullWarshipsListStore = new FullWarshipsListStore();
     makeAutoObservable(this)
   }
 
   /* Метод для создания хранилища окошек слайдера. Нужен, чтобы инициализировать это хранилище из компонента React, т.к.
-   для этого нужны уже загруженные warships, которым добавлено состояние isActive (см метод updateSliderItemStore в app.tsx) */
+   для этого нужны уже загруженные warships, которым добавлено состояние isActive (см метод setSliderItemStore в app.tsx) */
   initializeSliderItemStores(sliderItems: SliderItemStore[]) {
     this.sliderItemStores = sliderItems
   }

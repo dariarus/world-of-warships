@@ -4,6 +4,7 @@ import sidebarStyles from './sidebar.module.css';
 
 import {Overlay} from '../overlay/overlay';
 import {Filters} from '../filters/filters';
+import mainStore from '../../stores';
 
 type TSidebarProps = {
   sidebarIsOpen: boolean;
@@ -18,19 +19,31 @@ export const Sidebar: FunctionComponent<TSidebarProps> = (props) => {
         props.sidebarIsOpen &&
         <Overlay onClose={props.onClose}/>
       }
-      <div
-        className={props.sidebarIsOpen
-          ? `${sidebarStyles.sidebar} ${sidebarStyles.sidebar_opened}`
-          : `${sidebarStyles.sidebar}`}
+      <div className={props.sidebarIsOpen
+        ? `${sidebarStyles.sidebar} ${sidebarStyles.sidebar_opened}`
+        : `${sidebarStyles.sidebar}`}
       >
-        {/*<button className={sidebarStyles.button}>*/}
-        {/*  {*/}
-        {/*    props.sidebarIsOpen*/}
-        {/*      ? "Hide full list"*/}
-        {/*      : "Show all vehicles"*/}
-        {/*  }*/}
-        {/*</button>*/}
-        <Filters/>
+        <div className={sidebarStyles.sidebar__settings}>
+          <Filters/>
+          <button
+            className={sidebarStyles.button}
+            onClick={() => {
+              if (props.sidebarIsOpen) {
+                mainStore.fullWarshipsListStore.setListIsClose();
+                document.body.classList.remove('body-overlay');
+              } else {
+                mainStore.fullWarshipsListStore.setListIsOpen();
+                document.body.classList.add('body-overlay');
+              }
+            }}
+          >
+            {
+              props.sidebarIsOpen
+                ? "Hide full list"
+                : "Show all vehicles"
+            }
+          </button>
+        </div>
         {
           props.sidebarIsOpen
             ? <div className={sidebarStyles['sidebar__children-wrap']}>

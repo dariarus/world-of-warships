@@ -26,9 +26,35 @@
   height: 90%;
 }
 
+.sidebar__settings {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 20px;
+  width: 100%;
+}
+
+.sidebar_opened .sidebar__settings {
+  margin-bottom: 10px;
+}
+
 .button {
   all: unset;
-  position: absolute;
+  box-sizing: border-box;
+  padding: 5px;
+  background-color: rgba(36, 36, 36, .8);
+  border: 1px solid transparent;
+  font-family: 'Roboto', 'Arial', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18px;
+  text-align: center;
+  color: #fff;
+  cursor: pointer;
+  transition: border .3s;
+}
+
+.button:hover {
+  border: 1px solid rgba(255, 255, 255, .6);
 }
 
 .sidebar__children-wrap {

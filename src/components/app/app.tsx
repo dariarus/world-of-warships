@@ -70,9 +70,14 @@ const App: FunctionComponent = observer(() => {
       <main>
         <WarshipsInfoContainer activeElement={mainStore.sliderStore.currentActiveItem}/>
         <section className={appStyles['warships-list']}>
-          <Sidebar sidebarIsOpen={false} onClose={() => console.log('hi')}>
-            {/*<FullWarshipsList items={mainStore.sliderItemStores}/>*/}
-            <Slider sliderItemStores={mainStore.sliderItemStores}/>
+          <Sidebar
+            sidebarIsOpen={mainStore.fullWarshipsListStore.listIsOpen}
+            onClose={mainStore.fullWarshipsListStore.setListIsClose}>
+            {
+              mainStore.fullWarshipsListStore.listIsOpen
+                ? <FullWarshipsList items={mainStore.sliderItemStores}/>
+                : <Slider sliderItemStores={mainStore.sliderItemStores}/>
+            }
           </Sidebar>
         </section>
       </main>

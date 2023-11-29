@@ -17,6 +17,7 @@ const stores = {
   sliderItemStore: mainStore.sliderItemStores,
   filtersDataStore: mainStore.filtersFieldsDataStore,
   filtersFieldsDataStore: mainStore.filtersFieldsDataStore,
+  fullWarshipsListStore: mainStore.fullWarshipsListStore,
 };
 
 const app = ReactDOM.createRoot(
