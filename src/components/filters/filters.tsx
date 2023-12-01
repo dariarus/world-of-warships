@@ -26,11 +26,12 @@ export const Filters = () => {
 
   const handleOnApplyFilters = () => {
     mainStore.filtersDataStore.getFilteredData(warshipsDataStore.wships);
+    mainStore.sliderStore.setActiveIndex(0);
   }
 
-  const handleOnResetFilters = useCallback(() => {
+  const handleOnResetFilters = () => {
     mainStore.filtersDataStore.resetFilters(warshipsDataStore.wships);
-  }, [mainStore.filtersDataStore.levelsField, mainStore.filtersDataStore.nationsField, mainStore.filtersDataStore.typesField])
+  }
 
   return (
     <div className={filtersStyles['filters-wrap']}>
