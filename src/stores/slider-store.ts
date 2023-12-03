@@ -1,9 +1,11 @@
 import {makeAutoObservable} from 'mobx';
 import {SliderItemStore} from './slider-item-store';
+import {SliderItemActivator} from '../types/data';
 
 export class SliderStore {
   currentActiveItem: SliderItemStore | null = null;
   activeIndex: number = 0;
+  maxIndex: number = 0;
   restWidth: number = 0;
   fullTranslate: number = 0;
 
@@ -11,8 +13,8 @@ export class SliderStore {
     makeAutoObservable(this)
   }
 
-  setActiveItem(newActiveItem: SliderItemStore) {
-    console.log('newActiveItem: ' , newActiveItem)
+  setActiveItem(newActiveItem: SliderItemStore, activator: SliderItemActivator) {
+    // console.log('newActiveItem: ' , newActiveItem)
     if (!newActiveItem) {
       return;
     }
@@ -21,15 +23,20 @@ export class SliderStore {
     //   this.currentActiveItem.setIsActive(true);
     // }
     if (this.currentActiveItem) {
-      this.currentActiveItem.setIsActive(false);
+      this.currentActiveItem.setIsActive(false, activator);
     }
     this.currentActiveItem = newActiveItem;
-    this.currentActiveItem.setIsActive(true);
-    console.log('setActiveItem: ', this.currentActiveItem.isActive)
+    this.currentActiveItem.setIsActive(true, activator);
+    // console.log('setActiveItem: ', this.currentActiveItem.isActive)
+
   }
 
   setActiveIndex(newIndex: number) {
     this.activeIndex = newIndex;
+  }
+
+  setMaxIndex(newMaxIndex: number) {
+    this.maxIndex = newMaxIndex;
   }
 
   setRestWidth(newWidth: number) {

@@ -1,16 +1,21 @@
-import React, {FunctionComponent, useEffect} from 'react';
+import React, {FunctionComponent} from 'react';
 import {observer} from 'mobx-react-lite';
 
 import sliderItemStyles from './slider-item.module.css';
 
 import {SliderItemStore} from '../../stores/slider-item-store';
 import mainStore from '../../stores';
+import {SliderItemActivator} from '../../types/data';
 
-export const SliderItem: FunctionComponent<{ sliderItemStore: SliderItemStore, isActive: boolean }> = observer(({sliderItemStore, isActive}) => {
-  useEffect(() => {
-    console.log('component SliderItem: ', sliderItemStore.isActive)
-  }, [])
-
+export const SliderItem: FunctionComponent<{
+  sliderItemStore: SliderItemStore,
+  isActive: boolean,
+  // index: number
+}> = observer(({
+                 sliderItemStore,
+                 isActive,
+                 // index
+               }) => {
   return (
     sliderItemStore &&
     <button
@@ -22,7 +27,8 @@ export const SliderItem: FunctionComponent<{ sliderItemStore: SliderItemStore, i
         backgroundImage: `linear-gradient(rgba(36, 36, 36, .5), rgba(36, 36, 36, .5)), url(${(sliderItemStore.warship.nation.icons?.small || '')})`
       }}
       onClick={() => {
-        mainStore.sliderStore.setActiveItem(sliderItemStore);
+        const activator = mainStore.fullWarshipsListStore.listIsOpen ? SliderItemActivator.FULL_LIST : SliderItemActivator.SLIDER
+        mainStore.sliderStore.setActiveItem(sliderItemStore, activator);
         mainStore.fullWarshipsListStore.setListIsClose();
       }}
     >

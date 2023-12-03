@@ -30,9 +30,7 @@ export type TError = {
   message?: string
 };
 
-// export interface IWarshipsDataState {
-//   isLoading: boolean,
-//   warships: Array<TWarships>,
-//   isError: boolean,
-//   error: TError
-// }
+export enum SliderItemActivator {
+  SLIDER,
+  FULL_LIST
+}

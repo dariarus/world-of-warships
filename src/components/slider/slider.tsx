@@ -9,11 +9,14 @@ import {fullWindowWidth, widthOfOneElement} from '../../utils/constants';
 
 import {SliderItemStore} from '../../stores/slider-item-store';
 import mainStore from '../../stores';
+import {SliderItemActivator} from '../../types/data';
 
 export const Slider: FunctionComponent<{ sliderItemStores: SliderItemStore[] }> = observer((props) => {
   // Значения сдвигов
   const translateWidth = widthOfOneElement * 2;
   const translateWidthInPercents = translateWidth * 100 / fullWindowWidth;
+  // Доля длины одного элемента в длине сдвига. Нужно для прокрутки слайдера на активный элемент
+  const shareOfOneElementInTranslateWidth = widthOfOneElement / translateWidth
   // Общая длина входящего массива в px
   const fullWidth = props.sliderItemStores.length * widthOfOneElement;
   // Сдвиг в процентах относительно общей длины
@@ -51,6 +54,19 @@ export const Slider: FunctionComponent<{ sliderItemStores: SliderItemStore[] }> 
       mainStore.sliderStore.setFullTranslate(mainStore.sliderStore.activeIndex * translateWidthInPercents)
     }
   }, [mainStore.sliderStore.activeIndex])
+
+  // Устанавливаем активный элемент в область видимости слайдера, если он был выбран из плашки с полным списком
+  useEffect(() => {
+    if (mainStore.sliderStore.currentActiveItem?.sliderItemActivator === SliderItemActivator.FULL_LIST) {
+      for (let itemIndex = 0; itemIndex < mainStore.filtersDataStore.filteredWarships.length; itemIndex++) {
+        const currentWarship = mainStore.filtersDataStore.filteredWarships[itemIndex]
+        if (currentWarship === mainStore.sliderStore.currentActiveItem?.warship) {
+          mainStore.sliderStore.setActiveIndex(itemIndex * shareOfOneElementInTranslateWidth);
+          break;
+        }
+      }
+    }
+  }, [mainStore.sliderStore.currentActiveItem])
 
   // Установка индекса при клике вперед-назад
   const setNewIndex = (newIndex: number) => {

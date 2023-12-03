@@ -11,6 +11,7 @@ import warshipsDataStore from '../../stores/warships-data-store';
 import {SliderItemStore} from '../../stores/slider-item-store';
 import {Sidebar} from '../sidebar/sidebar';
 import {FullWarshipsList} from '../full-warships-list/full-warships-list';
+import {SliderItemActivator} from '../../types/data';
 // import sliderStore from '../../stores/slider-store';
 
 const App: FunctionComponent = observer(() => {
@@ -36,13 +37,14 @@ const App: FunctionComponent = observer(() => {
 
   useEffect(() => {
     if (!mainStore.sliderStore?.currentActiveItem && mainStore.sliderItemStores) {
-      mainStore.sliderStore.setActiveItem(mainStore.sliderItemStores[0])
+      mainStore.sliderStore.setActiveItem(mainStore.sliderItemStores[0], SliderItemActivator.SLIDER);
     }
   }, [mainStore.sliderItemStores])
 
   // TODO: убрать wships, заменить на список всех кораблей
   // TODO: решить проблему с рамкой вокруг первого элемента: не показывается при загрузке страницы
-  // TODO: решить проблему с прокруткой слайдера при фильтрации: если нажать стрелку прокрутки вправо несколько раз, то потом после применения фильтров результаты останутся на том де месте, то есть, если элементов мало, они останутся за областью видимости слева. Как сделать так, чтобы отфильтрованные элементы всегда откручивались в самое начало? restWidth в слайдере обнулять?
+  // TODO: решить проблему с прокруткой слайдера на выбранный элемент после его выделения из плашки с полным списком
+
   const setSliderItemStore = () => {
     // 1. Добавляем каждому warship-у, полученному с сервера, состояние isActive
     const sliderItemStore = mainStore.filtersDataStore.filteredWarships.map(item => new SliderItemStore(item));
@@ -57,7 +59,7 @@ const App: FunctionComponent = observer(() => {
 
   const setDefaultActiveItem = () => {
     if (!mainStore.sliderStore.currentActiveItem) {
-      mainStore.sliderStore.setActiveItem(mainStore.sliderItemStores[0])
+      mainStore.sliderStore.setActiveItem(mainStore.sliderItemStores[0], SliderItemActivator.SLIDER)
     }
   }
 
