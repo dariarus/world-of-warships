@@ -12,6 +12,8 @@ export class FullWarshipsListStore {
   }
 
   setListIsClose() {
-    this.listIsOpen = false;
+    if (this.listIsOpen) {
+      this.listIsOpen = false;
+    }
   }
 }

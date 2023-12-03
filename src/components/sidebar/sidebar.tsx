@@ -8,7 +8,6 @@ import mainStore from '../../stores';
 
 type TSidebarProps = {
   sidebarIsOpen: boolean;
-  onClose: () => void;
   children: React.ReactNode;
 }
 
@@ -17,7 +16,9 @@ export const Sidebar: FunctionComponent<TSidebarProps> = (props) => {
     <>
       {
         props.sidebarIsOpen &&
-        <Overlay onClose={props.onClose}/>
+        <Overlay onClose={() => {
+          mainStore.fullWarshipsListStore.setListIsClose()
+        }}/>
       }
       <div className={props.sidebarIsOpen
         ? `${sidebarStyles.sidebar} ${sidebarStyles.sidebar_opened}`

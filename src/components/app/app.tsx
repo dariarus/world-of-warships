@@ -72,7 +72,7 @@ const App: FunctionComponent = observer(() => {
         <section className={appStyles['warships-list']}>
           <Sidebar
             sidebarIsOpen={mainStore.fullWarshipsListStore.listIsOpen}
-            onClose={mainStore.fullWarshipsListStore.setListIsClose}>
+          >
             {
               mainStore.fullWarshipsListStore.listIsOpen
                 ? <FullWarshipsList items={mainStore.sliderItemStores}/>
