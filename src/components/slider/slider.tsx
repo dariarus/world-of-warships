@@ -61,7 +61,14 @@ export const Slider: FunctionComponent<{ sliderItemStores: SliderItemStore[] }> 
       for (let itemIndex = 0; itemIndex < mainStore.filtersDataStore.filteredWarships.length; itemIndex++) {
         const currentWarship = mainStore.filtersDataStore.filteredWarships[itemIndex]
         if (currentWarship === mainStore.sliderStore.currentActiveItem?.warship) {
-          mainStore.sliderStore.setActiveIndex(itemIndex * shareOfOneElementInTranslateWidth);
+          const translateIndexToActiveElement = itemIndex * shareOfOneElementInTranslateWidth;
+          /* если выбранный элемент находится в конце массива и попадает в последнее окно видимости,
+          то не нужно его прокручивать в начало, а просто показывать последнее окно */
+          if (translateIndexToActiveElement >= maxIndex) {
+            mainStore.sliderStore.setActiveIndex(maxIndex);
+          } else {
+            mainStore.sliderStore.setActiveIndex(translateIndexToActiveElement);
+          }
           break;
         }
       }
@@ -117,15 +124,15 @@ export const Slider: FunctionComponent<{ sliderItemStores: SliderItemStore[] }> 
         >
           {
             props.sliderItemStores.length > 0
-            ? props.sliderItemStores
-              .map((item) => (
-                <SliderItem
-                  key={item?.warship.id}
-                  sliderItemStore={item}
-                  isActive={item.isActive}
-                  // index={index}
-               />
-              ))
+              ? props.sliderItemStores
+                .map((item) => (
+                  <SliderItem
+                    key={item?.warship.id}
+                    sliderItemStore={item}
+                    isActive={item.isActive}
+                    // index={index}
+                  />
+                ))
               : <p className={sliderStyles.text}>Nothing was found</p>
           }
         </div>
