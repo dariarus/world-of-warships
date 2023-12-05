@@ -25,9 +25,9 @@ const App: FunctionComponent = observer(() => {
     setSliderItemStore();
   }, [warshipsDataStore.warships])
 
-  useEffect(() => {
-    setSliderItemStore();
-  }, [warshipsDataStore.wships])
+  // useEffect(() => {
+  //   setSliderItemStore();
+  // }, [warshipsDataStore.wships])
 
   useEffect(() => {
     mainStore.filtersDataStore.setFilteredData(mainStore.sliderItemStores);
@@ -40,7 +40,7 @@ const App: FunctionComponent = observer(() => {
   // TODO: убрать wships, заменить на список всех кораблей
   const setSliderItemStore = () => {
     // 1. Добавляем каждому warship-у, полученному с сервера, состояние isActive
-    const sliderItemStore = warshipsDataStore.wships.map(item => new SliderItemStore(item));
+    const sliderItemStore = warshipsDataStore.warships.map(item => new SliderItemStore(item));
     // 2. Инициализируем массив с хранилищами SliderItemStore и сохраняем в основном сторе (mainStore)
     mainStore.initializeSliderItemStores(sliderItemStore);
   }
