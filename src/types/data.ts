@@ -31,6 +31,8 @@ export type TError = {
 };
 
 export enum SliderItemActivator {
-  SLIDER,
-  FULL_LIST
+  // активатор при загрузке страницы
+  INITIAL = 'initial',
+  SLIDER = 'slider',
+  FULL_LIST = 'full-list'
 }

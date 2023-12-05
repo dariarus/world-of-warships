@@ -1,12 +1,14 @@
 import {makeAutoObservable} from 'mobx';
 import {TWarship} from '../types/data';
 import {initialFieldsValue} from '../utils/constants';
+import {SliderItemStore} from './slider-item-store';
+import {arraysEqual} from '../utils/functions';
 
 export class FiltersDataStore {
   levelsField: string = initialFieldsValue;
   nationsField: string = initialFieldsValue;
   typesField: string = initialFieldsValue;
-  filteredWarships: TWarship[] = [];
+  filteredWarships: SliderItemStore[] = [];
 
   constructor() {
     makeAutoObservable(this)
@@ -45,17 +47,19 @@ export class FiltersDataStore {
     return item.type.title === this.typesField;
   }
 
-  setFilteredData(data: TWarship[]) {
+  setFilteredData(data: SliderItemStore[]) {
     this.filteredWarships = data;
   }
 
-  getFilteredData(initialWarshipsArray: TWarship[]) {
+  getFilteredData(initialWarshipsArray: SliderItemStore[]) {
     const filteredWarships = initialWarshipsArray
-      .filter(item => this.filterByLevels(item) && this.filterByNations(item) && this.filterByTypes(item));
-    this.setFilteredData(filteredWarships);
+      .filter(item => this.filterByLevels(item.warship) && this.filterByNations(item.warship) && this.filterByTypes(item.warship));
+    if (!arraysEqual(filteredWarships, this.filteredWarships)) {
+      this.setFilteredData(filteredWarships);
+    }
   }
 
-  resetFilters(initialWarshipsArray: TWarship[]) {
+  resetFilters(initialWarshipsArray: SliderItemStore[]) {
     this.setLevelsField(initialFieldsValue);
     this.setNationsField(initialFieldsValue);
     this.setTypesField(initialFieldsValue);

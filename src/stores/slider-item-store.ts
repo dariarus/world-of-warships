@@ -16,9 +16,4 @@ export class SliderItemStore {
     this.isActive = isActive;
     this.sliderItemActivator = activator;
   }
-  // getActiveItem(warships: TWarship[], id: string) {
-  //   this.activeItem = warships.find(item => item.id === id);
-  //   console.log('clickedItem: ', this.activeItem?.id)
-  //   return this.activeItem
-  // }
 }

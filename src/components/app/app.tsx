@@ -12,7 +12,6 @@ import {SliderItemStore} from '../../stores/slider-item-store';
 import {Sidebar} from '../sidebar/sidebar';
 import {FullWarshipsList} from '../full-warships-list/full-warships-list';
 import {SliderItemActivator} from '../../types/data';
-// import sliderStore from '../../stores/slider-store';
 
 const App: FunctionComponent = observer(() => {
   useEffect(() => {
@@ -20,45 +19,35 @@ const App: FunctionComponent = observer(() => {
   }, [])
 
   useEffect(() => {
-    // const initialObjects = toJS(warshipsDataStore.warships)
     mainStore.filtersFieldsDataStore.setLevels(warshipsDataStore.warships);
     mainStore.filtersFieldsDataStore.setNations(warshipsDataStore.warships);
     mainStore.filtersFieldsDataStore.setTypes(warshipsDataStore.warships);
+    setSliderItemStore();
   }, [warshipsDataStore.warships])
 
   useEffect(() => {
-    setDefaultActiveItem();
-    mainStore.filtersDataStore.setFilteredData(warshipsDataStore.wships);
+    setSliderItemStore();
   }, [warshipsDataStore.wships])
 
   useEffect(() => {
-    setSliderItemStore();
-  }, [mainStore.filtersDataStore.filteredWarships])
-
-  useEffect(() => {
-    if (!mainStore.sliderStore?.currentActiveItem && mainStore.sliderItemStores) {
-      mainStore.sliderStore.setActiveItem(mainStore.sliderItemStores[0], SliderItemActivator.SLIDER);
-    }
+    mainStore.filtersDataStore.setFilteredData(mainStore.sliderItemStores);
   }, [mainStore.sliderItemStores])
 
-  // TODO: убрать wships, заменить на список всех кораблей
-  // TODO: решить проблему с рамкой вокруг первого элемента: не показывается при загрузке страницы
+  useEffect(() => {
+    setDefaultActiveItem();
+  }, [mainStore.filtersDataStore.filteredWarships])
 
+  // TODO: убрать wships, заменить на список всех кораблей
   const setSliderItemStore = () => {
     // 1. Добавляем каждому warship-у, полученному с сервера, состояние isActive
-    const sliderItemStore = mainStore.filtersDataStore.filteredWarships.map(item => new SliderItemStore(item));
-    // if (sliderItemStore && sliderItemStore.length > 0) {
-    //   sliderItemStore[0].setIsActive(true)
-    // }
-    // console.log(mainStore.filtersFieldsStore.filteredWarships)
-
+    const sliderItemStore = warshipsDataStore.wships.map(item => new SliderItemStore(item));
     // 2. Инициализируем массив с хранилищами SliderItemStore и сохраняем в основном сторе (mainStore)
     mainStore.initializeSliderItemStores(sliderItemStore);
   }
 
   const setDefaultActiveItem = () => {
-    if (!mainStore.sliderStore.currentActiveItem) {
-      mainStore.sliderStore.setActiveItem(mainStore.sliderItemStores[0], SliderItemActivator.SLIDER)
+    if (mainStore.sliderItemStores && mainStore.sliderItemStores.length > 0) {
+      mainStore.sliderStore.setActiveItem(mainStore.sliderItemStores[0], SliderItemActivator.INITIAL)
     }
   }
 
@@ -76,8 +65,8 @@ const App: FunctionComponent = observer(() => {
           >
             {
               mainStore.fullWarshipsListStore.listIsOpen
-                ? <FullWarshipsList items={mainStore.sliderItemStores}/>
-                : <Slider sliderItemStores={mainStore.sliderItemStores}/>
+                ? <FullWarshipsList items={mainStore.filtersDataStore.filteredWarships}/>
+                : <Slider filteredItems={mainStore.filtersDataStore.filteredWarships}/>
             }
           </Sidebar>
         </section>

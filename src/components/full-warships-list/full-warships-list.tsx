@@ -5,8 +5,9 @@ import fullWarshipsListStyles from './full-warships-list.module.css';
 import {SliderItem} from '../slider-item/slider-item';
 
 import {SliderItemStore} from '../../stores/slider-item-store';
+import {observer} from 'mobx-react-lite';
 
-export const FullWarshipsList: FunctionComponent<{ items: SliderItemStore[] }> = (props) => {
+export const FullWarshipsList: FunctionComponent<{ items: SliderItemStore[] }> = observer((props) => {
   return (
     <div className={fullWarshipsListStyles['list-container']}>
       {
@@ -15,11 +16,9 @@ export const FullWarshipsList: FunctionComponent<{ items: SliderItemStore[] }> =
             {
               props.items &&
               props.items.map((item) => (
-                <li className={fullWarshipsListStyles['list-item']}>
+                <li key={item?.warship.id} className={fullWarshipsListStyles['list-item']}>
                   <SliderItem
-                    key={item?.warship.id}
                     sliderItemStore={item}
-                    isActive={item.isActive}
                   />
                 </li>
               ))
@@ -29,4 +28,4 @@ export const FullWarshipsList: FunctionComponent<{ items: SliderItemStore[] }> =
       }
     </div>
   )
-}
+})

@@ -11,14 +11,14 @@ import {SliderItemStore} from '../../stores/slider-item-store';
 import mainStore from '../../stores';
 import {SliderItemActivator} from '../../types/data';
 
-export const Slider: FunctionComponent<{ sliderItemStores: SliderItemStore[] }> = observer((props) => {
+export const Slider: FunctionComponent<{ filteredItems: SliderItemStore[] }> = observer((props) => {
   // Значения сдвигов
   const translateWidth = widthOfOneElement * 2;
   const translateWidthInPercents = translateWidth * 100 / fullWindowWidth;
   // Доля длины одного элемента в длине сдвига. Нужно для прокрутки слайдера на активный элемент
   const shareOfOneElementInTranslateWidth = widthOfOneElement / translateWidth
   // Общая длина входящего массива в px
-  const fullWidth = props.sliderItemStores.length * widthOfOneElement;
+  const fullWidth = props.filteredItems.length * widthOfOneElement;
   // Сдвиг в процентах относительно общей длины
   // 1. Общая длина в процентах от длины окна (окно видимости 1400px берем за 100%, значит, общая будет 314,3% для 20 элементов)
   const fullWidthInPercentsRelativelyWindowWidth = fullWidth * 100 / fullWindowWidth;
@@ -43,7 +43,7 @@ export const Slider: FunctionComponent<{ sliderItemStores: SliderItemStore[] }> 
   // Установка изначально остающейся за областью видимости длины после загрузки массива кораблей
   useEffect(() => {
     mainStore.sliderStore.setRestWidth(initialRestWidth)
-  }, [props.sliderItemStores])
+  }, [props.filteredItems])
 
   // Настройка сдвига при обычных условиях и последний раз, когда нельзя сдвинуться на заданное значение translateWidthInPercents
   // (когда на сдвиг остается меньше места, чем указано в translateWidthInPercents)
@@ -60,10 +60,10 @@ export const Slider: FunctionComponent<{ sliderItemStores: SliderItemStore[] }> 
     if (mainStore.sliderStore.currentActiveItem?.sliderItemActivator === SliderItemActivator.FULL_LIST) {
       for (let itemIndex = 0; itemIndex < mainStore.filtersDataStore.filteredWarships.length; itemIndex++) {
         const currentWarship = mainStore.filtersDataStore.filteredWarships[itemIndex]
-        if (currentWarship === mainStore.sliderStore.currentActiveItem?.warship) {
+        if (currentWarship.warship === mainStore.sliderStore.currentActiveItem?.warship) {
           const translateIndexToActiveElement = itemIndex * shareOfOneElementInTranslateWidth;
           /* если выбранный элемент находится в конце массива и попадает в последнее окно видимости,
-          то не нужно его прокручивать в начало, а просто показывать последнее окно */
+          то не нужно его прокручивать в начало, а просто показывать последнее окно ("страницу") */
           if (translateIndexToActiveElement >= maxIndex) {
             mainStore.sliderStore.setActiveIndex(maxIndex);
           } else {
@@ -109,7 +109,7 @@ export const Slider: FunctionComponent<{ sliderItemStores: SliderItemStore[] }> 
     <div className={sliderStyles['slider-container']}>
       <button
         className={`${sliderStyles.button} ${sliderStyles.button_left}`}
-        disabled={mainStore.sliderStore.activeIndex === 0 || props.sliderItemStores.length < 1}
+        disabled={mainStore.sliderStore.activeIndex === 0 || props.filteredItems.length < 1}
         onClick={() => {
           setNewIndex(mainStore.sliderStore.activeIndex - 1);
           setRestWidthInPxClickLeft();
@@ -123,13 +123,13 @@ export const Slider: FunctionComponent<{ sliderItemStores: SliderItemStore[] }> 
           }}
         >
           {
-            props.sliderItemStores.length > 0
-              ? props.sliderItemStores
+            props.filteredItems.length > 0
+              ? props.filteredItems
                 .map((item) => (
                   <SliderItem
                     key={item?.warship.id}
                     sliderItemStore={item}
-                    isActive={item.isActive}
+                    // isActive={item.isActive}
                     // index={index}
                   />
                 ))
@@ -139,7 +139,7 @@ export const Slider: FunctionComponent<{ sliderItemStores: SliderItemStore[] }> 
       </div>
       <button
         className={`${sliderStyles.button} ${sliderStyles.button_right}`}
-        disabled={mainStore.sliderStore.activeIndex === maxIndex || props.sliderItemStores.length < 1 || props.sliderItemStores.length < 6}
+        disabled={mainStore.sliderStore.activeIndex === maxIndex || props.filteredItems.length < 1 || props.filteredItems.length < 6}
         onClick={() => {
           setNewIndex(mainStore.sliderStore.activeIndex + 1);
           setRestWidthInPxClickRight();

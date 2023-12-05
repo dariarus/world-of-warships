@@ -9,18 +9,18 @@ import {SliderItemActivator} from '../../types/data';
 
 export const SliderItem: FunctionComponent<{
   sliderItemStore: SliderItemStore,
-  isActive: boolean,
+  // isActive: boolean,
   // index: number
 }> = observer(({
                  sliderItemStore,
-                 isActive,
+                 // isActive,
                  // index
                }) => {
   return (
     sliderItemStore &&
     <button
       className={
-        isActive
+        sliderItemStore.isActive
           ? `${sliderItemStyles.item} ${sliderItemStyles.item_active}`
           : `${sliderItemStyles.item}`}
       style={{
