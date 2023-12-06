@@ -24,4 +24,4 @@ npm install
 npm run dev
 ```
 
-*Ссылка на лендинг на GitHub Pages*: [World of Warships]()
+*Ссылка на лендинг на GitHub Pages*: [World of Warships](https://dariarus.github.io/world-of-warships/)
