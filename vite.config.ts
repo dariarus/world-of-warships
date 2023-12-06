@@ -7,6 +7,7 @@ export default defineConfig({
       tsDecorators: true
     }),
   ],
+  base: "/world-of-warships/",
   server: {
     host: 'localhost',
     port: 3000
