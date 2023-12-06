@@ -15,7 +15,9 @@ import {SliderItemActivator} from '../../types/data';
 
 const App: FunctionComponent = observer(() => {
   useEffect(() => {
-    warshipsDataStore.loadFromServer();
+    // warshipsDataStore.loadFromServer();
+    // warshipsDataStore.loadLocal();
+    warshipsDataStore.loadWarships();
   }, [])
 
   useEffect(() => {
