@@ -1,0 +1,67 @@
+.slider-container {
+  position: relative;
+  /*display: flex;*/
+  box-sizing: border-box;
+  /*gap: 20px;*/
+  justify-content: center;
+  /*max-width: 1400px;*/
+}
+
+.slider-outer-window {
+  /*box-sizing: border-box;*/
+  width: 1342px;
+  overflow: hidden;
+}
+
+.slider-inner-window {
+  display: flex;
+  gap: 0 10px;
+  box-sizing: border-box;
+  min-height: 110px;
+  transition: transform .3s ease-in-out;
+}
+
+.button {
+  all: unset;
+  position: absolute;
+  display: block;
+  width: 30px;
+  min-height: 100%;
+  transition: background-color .3s;
+}
+
+.button:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, .3);
+  cursor: pointer;
+}
+
+.button:active:not(:disabled) {
+  background-color: rgba(255, 255, 255, .7);
+}
+
+.button:disabled {
+  opacity: .2;
+}
+
+.button_left {
+  left: -50px;
+  top: 0;
+  background: url(../../images/arrow-left.svg) center center no-repeat;
+}
+
+.button_right {
+  right: -50px;
+  top: 0;
+  background: url(../../images/arrow-right.svg) center center no-repeat;
+}
+
+.text {
+  margin: 0 auto;
+  align-self: center;
+  font-family: 'Roboto', 'Arial', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 22px;
+  text-align: center;
+  color: #fff;
+}

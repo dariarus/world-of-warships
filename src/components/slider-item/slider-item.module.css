@@ -1,0 +1,70 @@
+.item {
+  all: unset;
+  position: relative;
+  box-sizing: border-box;
+  padding: 5px;
+  min-width: 210px;
+  height: 100%;
+  overflow: hidden;
+  background-position: top left;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: border .3s;
+}
+
+.item_active {
+  border: 2px solid rgba(255, 255, 255, .6)
+}
+
+.item:hover:not(.item_active) {
+  border: 2px solid rgba(255, 255, 255, .3)
+}
+
+.item__type-level-container {
+  display: flex;
+  gap: 0 5px;
+  align-items: center;
+}
+
+.text {
+  margin: 0;
+  font-family: 'Roboto', 'Arial', sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+}
+
+.text_upper-case {
+  text-transform: uppercase;
+  text-align: end;
+}
+
+.image {
+
+}
+
+.image_warship-type {
+  object-fit: contain;
+  object-position: left;
+}
+
+.image_warship {
+  margin: -50px 0 0 0;
+  width: 200px;
+  object-fit: contain;
+  object-position: center;
+}
+
+.item__title-nation-container {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0 8px 5px;
+  width: 100%;
+}
