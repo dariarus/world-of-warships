@@ -35,10 +35,13 @@ export const Filters = () => {
   const handleOnApplyFilters = () => {
     mainStore.filtersDataStore.getFilteredData(mainStore.sliderItemStores);
     mainStore.sliderStore.setActiveIndex(0);
+    mainStore.sliderStore.setFullTranslate(0);
   }
 
   const handleOnResetFilters = () => {
     mainStore.filtersDataStore.resetFilters(mainStore.sliderItemStores);
+    mainStore.sliderStore.setActiveIndex(0);
+    mainStore.sliderStore.setFullTranslate(0);
     setLevelValue(initialFieldsValue);
     setNationValue(initialFieldsValue);
     setTypeValue(initialFieldsValue);

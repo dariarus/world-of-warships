@@ -24,7 +24,7 @@ export const SliderItem: FunctionComponent<{
           ? `${sliderItemStyles.item} ${sliderItemStyles.item_active}`
           : `${sliderItemStyles.item}`}
       style={{
-        backgroundImage: `linear-gradient(rgba(36, 36, 36, .5), rgba(36, 36, 36, .5)), url(${(sliderItemStore.warship.nation.icons?.small || '')})`
+        backgroundImage: `linear-gradient(rgba(36, 36, 36, .5), rgba(36, 36, 36, .5)), url(${(sliderItemStore.warship.nation.icons?.large || '')})`
       }}
       onClick={() => {
         const activator = mainStore.fullWarshipsListStore.listIsOpen ? SliderItemActivator.FULL_LIST : SliderItemActivator.SLIDER

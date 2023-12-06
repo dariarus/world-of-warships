@@ -45,6 +45,12 @@ export const Slider: FunctionComponent<{ filteredItems: SliderItemStore[] }> = o
     mainStore.sliderStore.setRestWidth(initialRestWidth)
   }, [props.filteredItems])
 
+  // useEffect(() => {
+  //   if (props.filteredItems.length < 1) {
+  //     mainStore.sliderStore.setActiveIndex(0);
+  //   }
+  // }, [props.filteredItems])
+
   // Настройка сдвига при обычных условиях и последний раз, когда нельзя сдвинуться на заданное значение translateWidthInPercents
   // (когда на сдвиг остается меньше места, чем указано в translateWidthInPercents)
   useEffect(() => {
@@ -148,3 +154,49 @@ export const Slider: FunctionComponent<{ filteredItems: SliderItemStore[] }> = o
     </div>
   )
 })
+
+
+// {
+//   props.filteredItems.length > 0
+//   &&
+//   <>
+//     <button
+//       className={`${sliderStyles.button} ${sliderStyles.button_left}`}
+//       disabled={mainStore.sliderStore.activeIndex === 0 || props.filteredItems.length < 1}
+//       onClick={() => {
+//         setNewIndex(mainStore.sliderStore.activeIndex - 1);
+//         setRestWidthInPxClickLeft();
+//       }}
+//     />
+//     <div className={sliderStyles['slider-outer-window']}>
+//       <div
+//         className={sliderStyles['slider-inner-window']}
+//         style={{
+//           transform: `translateX(-${mainStore.sliderStore.fullTranslate}%)`
+//         }}
+//       >
+//         {
+//           props.filteredItems.length > 0 &&
+//           props.filteredItems
+//             .map((item) => (
+//               <SliderItem
+//                 key={item?.warship.id}
+//                 sliderItemStore={item}
+//                 // isActive={item.isActive}
+//                 // index={index}
+//               />
+//             ))
+//         }
+//       </div>
+//     </div>
+//     <button
+//       className={`${sliderStyles.button} ${sliderStyles.button_right}`}
+//       disabled={mainStore.sliderStore.activeIndex === maxIndex || props.filteredItems.length < 1 || props.filteredItems.length < 6}
+//       onClick={() => {
+//         setNewIndex(mainStore.sliderStore.activeIndex + 1);
+//         setRestWidthInPxClickRight();
+//       }}
+//     />
+//   </>
+// }
+// : <p className={sliderStyles.text}>Nothing was found</p>
