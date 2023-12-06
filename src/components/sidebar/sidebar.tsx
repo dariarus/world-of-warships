@@ -26,6 +26,13 @@ export const Sidebar: FunctionComponent<TSidebarProps> = (props) => {
       >
         <div className={sidebarStyles.sidebar__settings}>
           <Filters/>
+          <p className={props.sidebarIsOpen
+            ? `${sidebarStyles.text} ${sidebarStyles.text_dark}`
+            : `${sidebarStyles.text} ${sidebarStyles.text_light}`
+          }>
+            Total results: <span
+            className={sidebarStyles['text-span']}>{mainStore.filtersDataStore.filteredWarships.length}</span>
+          </p>
           <button
             className={sidebarStyles.button}
             onClick={() => {
