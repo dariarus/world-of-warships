@@ -6,6 +6,8 @@
 
 *Используемые технологии*: React, MobX, TSX, flexbox, grid layout, БЭМ, JavaScript, TypeScript, Vite, GraphQL API
 
+*В разработке*:  возможность множественного выбора в фильтрах, адаптив, прелаудер
+
 *Инструкция по запуску приложения*:
 
 1). Склонировать репозиторий :
@@ -24,4 +26,4 @@ npm install
 npm run dev
 ```
 
-*Ссылка на лендинг на GitHub Pages*: [World of Warships](https://dariarus.github.io/world-of-warships/)
+*Ссылка на приложение на GitHub Pages*: [World of Warships](https://dariarus.github.io/world-of-warships/)
