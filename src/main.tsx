@@ -8,11 +8,10 @@ import './fonts/fonts.css';
 import App from './components/app/app';
 
 import mainStore from './stores';
-import warshipsDataStore from './stores/warships-data-store';
 
 const stores = {
   mainStore,
-  warshipsDataStore,
+  warshipsDataStore: mainStore.warshipsDataStore,
   sliderStore: mainStore.sliderStore,
   sliderItemStore: mainStore.sliderItemStores,
   filtersDataStore: mainStore.filtersFieldsDataStore,

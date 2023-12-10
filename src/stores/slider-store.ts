@@ -1,12 +1,14 @@
 import {makeAutoObservable} from 'mobx';
 import {SliderItemStore} from './slider-item-store';
 import {SliderItemActivator} from '../types/data';
+import {visibleItemsInSlider} from '../utils/constants';
 
 export class SliderStore {
   currentActiveItem: SliderItemStore | null = null;
   activeIndex: number = 0;
   restWidth: number = 0;
   fullTranslate: number = 0;
+  visibleSliderItems: number = visibleItemsInSlider;
 
   constructor() {
     makeAutoObservable(this)
@@ -39,5 +41,13 @@ export class SliderStore {
 
   setFullTranslate(translate: number) {
     this.fullTranslate = translate;
+  }
+
+  setVisibleSliderItems(moreItems: number) {
+    this.visibleSliderItems = this.visibleSliderItems + moreItems;
+  }
+
+  resetVisibleSliderItems() {
+    this.visibleSliderItems = visibleItemsInSlider;
   }
 }

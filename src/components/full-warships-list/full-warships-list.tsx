@@ -7,7 +7,7 @@ import {SliderItem} from '../slider-item/slider-item';
 import {SliderItemStore} from '../../stores/slider-item-store';
 import {observer} from 'mobx-react-lite';
 
-export const FullWarshipsList: FunctionComponent<{ items: SliderItemStore[] }> = observer((props) => {
+const FullWarshipsList: FunctionComponent<{ items: SliderItemStore[] }> = observer((props) => {
   return (
     <div className={fullWarshipsListStyles['list-container']}>
       {
@@ -15,10 +15,12 @@ export const FullWarshipsList: FunctionComponent<{ items: SliderItemStore[] }> =
           ? <ul className={fullWarshipsListStyles.list}>
             {
               props.items &&
-              props.items.map((item) => (
+              props.items.map((item, index) => (
                 <li key={item?.warship.id} className={fullWarshipsListStyles['list-item']}>
                   <SliderItem
                     sliderItemStore={item}
+                    isShowMoreButton={index === props.items.length - 1}
+                    // index={index}
                   />
                 </li>
               ))
@@ -29,3 +31,5 @@ export const FullWarshipsList: FunctionComponent<{ items: SliderItemStore[] }> =
     </div>
   )
 })
+
+export default FullWarshipsList

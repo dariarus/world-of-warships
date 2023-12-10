@@ -26,4 +26,7 @@ npm install
 npm run dev
 ```
 
+4). Открыть приложение в браузере по адресу:
+http://localhost:3000/world-of-warships/
+
 *Ссылка на приложение на GitHub Pages*: [World of Warships](https://dariarus.github.io/world-of-warships/)
