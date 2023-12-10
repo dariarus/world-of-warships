@@ -8,7 +8,6 @@
 }
 
 .item_more {
-  /*background-color: rgba(36, 36, 36, .5);*/
   background-color: rgba(255, 255, 255, .3);
   font-family: 'Roboto', 'Arial', sans-serif;
   font-weight: 400;
@@ -34,7 +33,6 @@
 }
 
 .item_more:hover:not(.item_active) {
-  /*background-color: rgba(255, 255, 255, 1);*/
   background-color: rgba(255, 255, 255, .7);
   font-size: 20px;
 }
