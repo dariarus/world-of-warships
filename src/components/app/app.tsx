@@ -40,7 +40,7 @@ const App: FunctionComponent = observer(() => {
   }, [mainStore.filtersDataStore.filteredWarships])
 
   const setSliderItemStore = () => {
-    // 1. Добавляем каждому warship-у, полученному с сервера, состояние isActive
+    // 1. Добавляем каждому warship-у, полученному с сервера, дополнительное поле isActive для отслеживания состояния
     const sliderItemStore = mainStore.warshipsDataStore.warships.map(item => new SliderItemStore(item));
     // 2. Инициализируем массив с хранилищами SliderItemStore и сохраняем в основном сторе (mainStore)
     mainStore.initializeSliderItemStores(sliderItemStore);
@@ -52,13 +52,9 @@ const App: FunctionComponent = observer(() => {
     }
   }
 
-  const setWarshipsToShow = useCallback((activator: SliderItemActivator) => {
-    if (activator === SliderItemActivator.SLIDER) {
-      return getWarshipsToShow(mainStore.filtersDataStore.filteredWarships, mainStore.sliderStore.visibleSliderItems);
-    } else {
-      return getWarshipsToShow(mainStore.filtersDataStore.filteredWarships, mainStore.fullWarshipsListStore.visibleFullListItems);
-    }
-  }, [mainStore.filtersDataStore.filteredWarships, mainStore.sliderStore.visibleSliderItems, mainStore.fullWarshipsListStore.visibleFullListItems])
+  const setWarshipsToShow = useCallback(() => {
+      return getWarshipsToShow(mainStore.filtersDataStore.filteredWarships, mainStore.filtersDataStore.visibleItems);
+  }, [mainStore.filtersDataStore.filteredWarships, mainStore.filtersDataStore.visibleItems])
 
   return (
     <div className={appStyles.wrap}>
@@ -75,8 +71,8 @@ const App: FunctionComponent = observer(() => {
             <Suspense fallback={loading()}>
               {
                 mainStore.fullWarshipsListStore.listIsOpen
-                  ? <FullWarshipsList items={setWarshipsToShow(SliderItemActivator.FULL_LIST)}/>
-                  : <Slider filteredItems={setWarshipsToShow(SliderItemActivator.SLIDER)}/>
+                  ? <FullWarshipsList items={setWarshipsToShow()}/>
+                  : <Slider filteredItems={setWarshipsToShow()}/>
               }
             </Suspense>
           </Sidebar>

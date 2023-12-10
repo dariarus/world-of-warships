@@ -6,14 +6,13 @@ import sliderItemStyles from './slider-item.module.css';
 import mainStore from '../../stores';
 import {SliderItemStore} from '../../stores/slider-item-store';
 
-import {visibleItemsInFullList} from '../../utils/constants';
+import {visibleItems} from '../../utils/constants';
 
 import {SliderItemActivator} from '../../types/data';
 
 export const SliderItem: FunctionComponent<{
   sliderItemStore: SliderItemStore,
   isShowMoreButton?: boolean
-
   // index: number
 }> = observer(({
                  sliderItemStore,
@@ -27,7 +26,7 @@ export const SliderItem: FunctionComponent<{
   }
 
   const handleOnShowMoreItems = () => {
-    mainStore.fullWarshipsListStore.setVisibleFullListItems(visibleItemsInFullList);
+    mainStore.filtersDataStore.setVisibleItems(visibleItems);
   }
 
   return (

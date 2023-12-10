@@ -7,7 +7,7 @@ import {FilterButton} from '../filter-button/filter-button';
 
 import mainStore from '../../stores';
 
-import {initialFieldsValue, visibleItemsInFullList, visibleItemsInSlider} from '../../utils/constants';
+import {initialFieldsValue, visibleItems} from '../../utils/constants';
 
 export const Filters = () => {
   const [levelValue, setLevelValue] = useState(initialFieldsValue);
@@ -33,12 +33,10 @@ export const Filters = () => {
   }, [mainStore.filtersDataStore.typesField])
 
   const resetVisibleItems = () => {
-    if (mainStore.filtersDataStore.filteredWarships.length < visibleItemsInSlider
-      || mainStore.filtersDataStore.filteredWarships.length < visibleItemsInFullList) {
+    if (mainStore.filtersDataStore.filteredWarships.length < visibleItems) {
       return;
     }
-    mainStore.sliderStore.resetVisibleSliderItems();
-    mainStore.fullWarshipsListStore.resetVisibleFullListItems();
+    mainStore.filtersDataStore.resetVisibleItems();
   }
 
   const handleOnApplyFilters = () => {
