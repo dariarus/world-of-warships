@@ -20,7 +20,7 @@ const FullWarshipsList: FunctionComponent<{ items: SliderItemStore[] }> = observ
                   <SliderItem
                     sliderItemStore={item}
                     isShowMoreButton={index === props.items.length - 1}
-                    index={index}
+                    // index={index}
                   />
                 </li>
               ))

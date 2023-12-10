@@ -135,11 +135,11 @@ const Slider: FunctionComponent<{ filteredItems: SliderItemStore[] }> = observer
           {
             props.filteredItems.length > 0
               ? props.filteredItems
-                .map((item, index) => (
+                .map((item) => (
                   <SliderItem
                     key={item?.warship.id}
                     sliderItemStore={item}
-                    index={index}
+                    // index={index}
                   />
                 ))
               : <p className={sliderStyles.text}>Nothing was found</p>

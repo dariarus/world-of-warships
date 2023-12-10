@@ -9,14 +9,15 @@ import {QUERY, WARSHIPS_API_URL} from '../utils/constants';
 
 import {getResponseData} from '../utils/functions';
 
-// Класс экспортируется для того, чтобы импортировать его как _тип_ стейта warshipsDataStore, используемого в компонентах React
+// Класс экспортируется для того, чтобы импортировать его как _тип_ стейта mainStore.warshipsDataStore, используемого в компонентах React
 export class WarshipsDataStore {
   isLoading: boolean = false;
   warships: TWarship[] = [];
   isError: boolean = false;
   error: TError = {}
 
-  // get wships() { return this.warships.slice(0, 20) }
+  /* Для теста:
+    get wships() { return this.warships.slice(0, 20) } */
 
   /* Декораторы на момент работы над проектом не работают: @observable-поля не проксируются
   Использована функция для автоматического добавления нужных декораторов для всех полей и методов:*/
@@ -72,7 +73,6 @@ export class WarshipsDataStore {
   loadLocal() {
     this.setWarshipsDataLoading();
     return Promise.resolve(warships)
-      // .then(res => getResponseData<{ data: { vehicles: Array<TWarship> } }>(res))
       .then((res) => {
         this.setWarshipsData(res.data.vehicles as TWarship[])
       })
@@ -82,7 +82,3 @@ export class WarshipsDataStore {
       })
   }
 }
-
-const warshipsDataStore = new WarshipsDataStore();
-
-export default warshipsDataStore;

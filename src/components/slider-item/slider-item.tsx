@@ -3,20 +3,22 @@ import {observer} from 'mobx-react-lite';
 
 import sliderItemStyles from './slider-item.module.css';
 
-import {SliderItemStore} from '../../stores/slider-item-store';
 import mainStore from '../../stores';
-import {SliderItemActivator} from '../../types/data';
+import {SliderItemStore} from '../../stores/slider-item-store';
+
 import {visibleItemsInFullList} from '../../utils/constants';
+
+import {SliderItemActivator} from '../../types/data';
 
 export const SliderItem: FunctionComponent<{
   sliderItemStore: SliderItemStore,
   isShowMoreButton?: boolean
 
-  index: number
+  // index: number
 }> = observer(({
                  sliderItemStore,
                  isShowMoreButton,
-                 index
+                 // index
                }) => {
   const handleOnClickOnItem = () => {
     const activator = mainStore.fullWarshipsListStore.listIsOpen ? SliderItemActivator.FULL_LIST : SliderItemActivator.SLIDER
@@ -65,7 +67,7 @@ export const SliderItem: FunctionComponent<{
                   className={`${sliderItemStyles.image} ${sliderItemStyles.image_warship}`}
                 />
                 <div className={sliderItemStyles['item__title-nation-container']}>
-                  <p>{index}</p>
+                  {/*<p>{index}</p>*/}
                   <p className={sliderItemStyles.text}>{sliderItemStore.warship.nation.title}</p>
                   <p
                     className={`${sliderItemStyles.text} ${sliderItemStyles['text_upper-case']}`}>{sliderItemStore.warship.title}</p>
