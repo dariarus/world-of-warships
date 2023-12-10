@@ -6,6 +6,7 @@ import {SliderItem} from '../slider-item/slider-item';
 
 import {SliderItemStore} from '../../stores/slider-item-store';
 import {observer} from 'mobx-react-lite';
+import mainStore from '../../stores';
 
 const FullWarshipsList: FunctionComponent<{ items: SliderItemStore[] }> = observer((props) => {
   return (
@@ -19,7 +20,8 @@ const FullWarshipsList: FunctionComponent<{ items: SliderItemStore[] }> = observ
                 <li key={item?.warship.id} className={fullWarshipsListStyles['list-item']}>
                   <SliderItem
                     sliderItemStore={item}
-                    isShowMoreButton={index === props.items.length - 1}
+                    isShowMoreButton={index === props.items.length - 1
+                      && props.items.length !== mainStore.filtersDataStore.filteredWarships.length}
                     // index={index}
                   />
                 </li>

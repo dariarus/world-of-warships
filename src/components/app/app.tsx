@@ -15,6 +15,11 @@ import {getWarshipsToShow} from '../../utils/functions';
 
 import {SliderItemActivator} from '../../types/data';
 
+
+/* TODO:
+2. Перед сбросом visibleItems при применении фильтров проверять, а есть ли вообще 9 элементов?
+*/
+
 const App: FunctionComponent = observer(() => {
   const loading = () => {
     return <div>Loading...</div>
