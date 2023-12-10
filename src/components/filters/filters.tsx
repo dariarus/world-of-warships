@@ -7,7 +7,7 @@ import {FilterButton} from '../filter-button/filter-button';
 
 import mainStore from '../../stores';
 
-import {initialFieldsValue} from '../../utils/constants';
+import {initialFieldsValue, visibleItemsInFullList, visibleItemsInSlider} from '../../utils/constants';
 
 export const Filters = () => {
   const [levelValue, setLevelValue] = useState(initialFieldsValue);
@@ -32,23 +32,30 @@ export const Filters = () => {
     setTypeValue(e.target.value);
   }, [mainStore.filtersDataStore.typesField])
 
+  const resetVisibleItems = () => {
+    if (mainStore.filtersDataStore.filteredWarships.length < visibleItemsInSlider
+      || mainStore.filtersDataStore.filteredWarships.length < visibleItemsInFullList) {
+      return;
+    }
+    mainStore.sliderStore.resetVisibleSliderItems();
+    mainStore.fullWarshipsListStore.resetVisibleFullListItems();
+  }
+
   const handleOnApplyFilters = () => {
     mainStore.filtersDataStore.getFilteredData(mainStore.sliderItemStores);
     mainStore.sliderStore.setActiveIndex(0);
     mainStore.sliderStore.setFullTranslate(0);
-    mainStore.sliderStore.resetVisibleSliderItems();
-    mainStore.fullWarshipsListStore.resetVisibleFullListItems();
+    resetVisibleItems();
   }
 
   const handleOnResetFilters = () => {
     mainStore.filtersDataStore.resetFilters(mainStore.sliderItemStores);
     mainStore.sliderStore.setActiveIndex(0);
     mainStore.sliderStore.setFullTranslate(0);
-    mainStore.sliderStore.resetVisibleSliderItems();
-    mainStore.fullWarshipsListStore.resetVisibleFullListItems();
     setLevelValue(initialFieldsValue);
     setNationValue(initialFieldsValue);
     setTypeValue(initialFieldsValue);
+    resetVisibleItems();
   }
 
   return (
