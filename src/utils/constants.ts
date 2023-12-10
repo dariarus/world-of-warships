@@ -34,7 +34,5 @@ export const fullWindowWidth = 1342;
 
 export const initialFieldsValue = 'all';
 
-// export const visibleItemsInSlider = 9;
-// export const moreVisibleItemsInSlider = 2;
-// export const visibleItemsInFullList = 24;
-export const visibleItems = 24;
+export const visibleItems = 23;
+export const moreVisibleItems = 24;

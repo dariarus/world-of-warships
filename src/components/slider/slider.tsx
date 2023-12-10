@@ -5,7 +5,7 @@ import sliderStyles from './slider.module.css';
 
 import {SliderItem} from '../slider-item/slider-item';
 
-import {fullWindowWidth, visibleItems, widthOfOneElement} from '../../utils/constants';
+import {fullWindowWidth, moreVisibleItems, widthOfOneElement} from '../../utils/constants';
 
 import mainStore from '../../stores';
 import {SliderItemStore} from '../../stores/slider-item-store';
@@ -108,7 +108,7 @@ const Slider: FunctionComponent<{ filteredItems: SliderItemStore[] }> = observer
 
   // Хэндлеры по кликам на кнопки "вперед" и "назад"
   const handleOnClickRight = () => {
-    mainStore.filtersDataStore.setVisibleItems(visibleItems);
+    mainStore.filtersDataStore.setVisibleItems(moreVisibleItems);
     setNewIndex(mainStore.sliderStore.activeIndex + 1);
     setRestWidthInPxClickRight();
   }
