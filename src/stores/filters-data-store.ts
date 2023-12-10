@@ -1,6 +1,6 @@
 import {makeAutoObservable} from 'mobx';
 import {TWarship} from '../types/data';
-import {initialFieldsValue} from '../utils/constants';
+import {initialFieldsValue, visibleItems} from '../utils/constants';
 import {SliderItemStore} from './slider-item-store';
 import {arraysEqual} from '../utils/functions';
 
@@ -9,6 +9,7 @@ export class FiltersDataStore {
   nationsField: string = initialFieldsValue;
   typesField: string = initialFieldsValue;
   filteredWarships: SliderItemStore[] = [];
+  visibleItems: number = visibleItems;
 
   constructor() {
     makeAutoObservable(this)
@@ -64,5 +65,13 @@ export class FiltersDataStore {
     this.setNationsField(initialFieldsValue);
     this.setTypesField(initialFieldsValue);
     this.setFilteredData(initialWarshipsArray);
+  }
+
+  setVisibleItems(moreItems: number) {
+    this.visibleItems = this.visibleItems + moreItems;
+  }
+
+  resetVisibleItems() {
+    this.visibleItems = visibleItems;
   }
 }

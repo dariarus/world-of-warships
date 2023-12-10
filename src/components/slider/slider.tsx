@@ -5,7 +5,7 @@ import sliderStyles from './slider.module.css';
 
 import {SliderItem} from '../slider-item/slider-item';
 
-import {fullWindowWidth, moreVisibleItemsInSlider, widthOfOneElement} from '../../utils/constants';
+import {fullWindowWidth, visibleItems, widthOfOneElement} from '../../utils/constants';
 
 import mainStore from '../../stores';
 import {SliderItemStore} from '../../stores/slider-item-store';
@@ -108,7 +108,7 @@ const Slider: FunctionComponent<{ filteredItems: SliderItemStore[] }> = observer
 
   // Хэндлеры по кликам на кнопки "вперед" и "назад"
   const handleOnClickRight = () => {
-    mainStore.sliderStore.setVisibleSliderItems(moreVisibleItemsInSlider);
+    mainStore.filtersDataStore.setVisibleItems(visibleItems);
     setNewIndex(mainStore.sliderStore.activeIndex + 1);
     setRestWidthInPxClickRight();
   }
@@ -148,7 +148,7 @@ const Slider: FunctionComponent<{ filteredItems: SliderItemStore[] }> = observer
       </div>
       <button
         className={`${sliderStyles.button} ${sliderStyles.button_right}`}
-        disabled={mainStore.sliderStore.activeIndex === maxIndex || props.filteredItems.length < 1 || props.filteredItems.length < 6}
+        disabled={mainStore.sliderStore.activeIndex === maxIndex || props.filteredItems.length < 1 || props.filteredItems.length < 7}
         onClick={handleOnClickRight}
       />
     </div>
