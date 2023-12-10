@@ -39,9 +39,6 @@ const App: FunctionComponent = observer(() => {
     setDefaultActiveItem();
   }, [mainStore.filtersDataStore.filteredWarships])
 
-// !Для деплоя удалить node_modules и package-lock и установить их через Ubuntu. Потом деплоить.
-// Для работы сделать то же самое и установить все в ВебСторме!.
-
   const setSliderItemStore = () => {
     // 1. Добавляем каждому warship-у, полученному с сервера, состояние isActive
     const sliderItemStore = mainStore.warshipsDataStore.warships.map(item => new SliderItemStore(item));
