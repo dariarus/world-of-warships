@@ -5,13 +5,14 @@ import sliderStyles from './slider.module.css';
 
 import {SliderItem} from '../slider-item/slider-item';
 
-import {fullWindowWidth, widthOfOneElement} from '../../utils/constants';
+import {fullWindowWidth, moreVisibleItemsInSlider, widthOfOneElement} from '../../utils/constants';
 
-import {SliderItemStore} from '../../stores/slider-item-store';
 import mainStore from '../../stores';
+import {SliderItemStore} from '../../stores/slider-item-store';
+
 import {SliderItemActivator} from '../../types/data';
 
-export const Slider: FunctionComponent<{ filteredItems: SliderItemStore[] }> = observer((props) => {
+const Slider: FunctionComponent<{ filteredItems: SliderItemStore[] }> = observer((props) => {
   // Значения сдвигов
   const translateWidth = widthOfOneElement * 2;
   const translateWidthInPercents = translateWidth * 100 / fullWindowWidth;
@@ -34,8 +35,8 @@ export const Slider: FunctionComponent<{ filteredItems: SliderItemStore[] }> = o
 
   // Устанавливаем количество смещений, т.е. "страницу" по счету, которая отображается в области видимости в данный момент
   // (это по 6 полных элементов, плюс половинка следующего). Сдвигаемся по клику на длину двух полных элементов
-  /* (mainStore.sliderStore.activeIndex = 0 - отображаются от 0 до 6 и еще половинка 7го.
-  mainStore.sliderStore.activeIndex = 1 - отображаются от 2 до 7 и еще половинка 8го.
+  /* (mainStore.sliderStore.activeIndex = 0 - отображаются от 0 до 6 и еще половинка 7-го.
+  mainStore.sliderStore.activeIndex = 1 - отображаются от 2 до 7 и еще половинка 8-го.
   Отображаемый интервал элементов зависит от установленного сдвига */
   // Максимальное количество сдвигов для рассчитанной длины всех элементов входящего массива
   const maxIndex = (fullWidth - fullWindowWidth) / translateWidth;
@@ -45,14 +46,8 @@ export const Slider: FunctionComponent<{ filteredItems: SliderItemStore[] }> = o
     mainStore.sliderStore.setRestWidth(initialRestWidth)
   }, [props.filteredItems])
 
-  // useEffect(() => {
-  //   if (props.filteredItems.length < 1) {
-  //     mainStore.sliderStore.setActiveIndex(0);
-  //   }
-  // }, [props.filteredItems])
-
-  // Настройка сдвига при обычных условиях и последний раз, когда нельзя сдвинуться на заданное значение translateWidthInPercents
-  // (когда на сдвиг остается меньше места, чем указано в translateWidthInPercents)
+  /* Настройка сдвига при обычных условиях и последний раз, когда нельзя сдвинуться на заданное значение translateWidthInPercents
+    (когда на сдвиг остается меньше места, чем указано в translateWidthInPercents) */
   useEffect(() => {
     if (mainStore.sliderStore.restWidth + translateRelativelyFullWidth < translateRelativelyFullWidth) {
       mainStore.sliderStore.setFullTranslate(maxIndex * translateWidthInPercents);
@@ -92,7 +87,7 @@ export const Slider: FunctionComponent<{ filteredItems: SliderItemStore[] }> = o
     mainStore.sliderStore.setActiveIndex(newIndex);
   }
 
-  // Хэндлеры на клики по кнопкам "вперед" и "назад"
+  // Установка смещений по кликам на кнопки "вперед" и "назад"
   const setRestWidthInPxClickRight = () => {
     restWidthOutOfViewArea = mainStore.sliderStore.restWidth - (fullWidth * 10 / 100)
     if (restWidthOutOfViewArea <= 0) {
@@ -111,15 +106,24 @@ export const Slider: FunctionComponent<{ filteredItems: SliderItemStore[] }> = o
     mainStore.sliderStore.setRestWidth(restWidthOutOfViewArea);
   }
 
+  // Хэндлеры по кликам на кнопки "вперед" и "назад"
+  const handleOnClickRight = () => {
+    mainStore.sliderStore.setVisibleSliderItems(moreVisibleItemsInSlider);
+    setNewIndex(mainStore.sliderStore.activeIndex + 1);
+    setRestWidthInPxClickRight();
+  }
+
+  const handleOnClickLeft = () => {
+    setNewIndex(mainStore.sliderStore.activeIndex - 1);
+    setRestWidthInPxClickLeft();
+  }
+
   return (
     <div className={sliderStyles['slider-container']}>
       <button
         className={`${sliderStyles.button} ${sliderStyles.button_left}`}
         disabled={mainStore.sliderStore.activeIndex === 0 || props.filteredItems.length < 1}
-        onClick={() => {
-          setNewIndex(mainStore.sliderStore.activeIndex - 1);
-          setRestWidthInPxClickLeft();
-        }}
+        onClick={handleOnClickLeft}
       />
       <div className={sliderStyles['slider-outer-window']}>
         <div
@@ -131,12 +135,11 @@ export const Slider: FunctionComponent<{ filteredItems: SliderItemStore[] }> = o
           {
             props.filteredItems.length > 0
               ? props.filteredItems
-                .map((item) => (
+                .map((item, index) => (
                   <SliderItem
                     key={item?.warship.id}
                     sliderItemStore={item}
-                    // isActive={item.isActive}
-                    // index={index}
+                    index={index}
                   />
                 ))
               : <p className={sliderStyles.text}>Nothing was found</p>
@@ -146,57 +149,10 @@ export const Slider: FunctionComponent<{ filteredItems: SliderItemStore[] }> = o
       <button
         className={`${sliderStyles.button} ${sliderStyles.button_right}`}
         disabled={mainStore.sliderStore.activeIndex === maxIndex || props.filteredItems.length < 1 || props.filteredItems.length < 6}
-        onClick={() => {
-          setNewIndex(mainStore.sliderStore.activeIndex + 1);
-          setRestWidthInPxClickRight();
-        }}
+        onClick={handleOnClickRight}
       />
     </div>
   )
 })
 
-
-// {
-//   props.filteredItems.length > 0
-//   &&
-//   <>
-//     <button
-//       className={`${sliderStyles.button} ${sliderStyles.button_left}`}
-//       disabled={mainStore.sliderStore.activeIndex === 0 || props.filteredItems.length < 1}
-//       onClick={() => {
-//         setNewIndex(mainStore.sliderStore.activeIndex - 1);
-//         setRestWidthInPxClickLeft();
-//       }}
-//     />
-//     <div className={sliderStyles['slider-outer-window']}>
-//       <div
-//         className={sliderStyles['slider-inner-window']}
-//         style={{
-//           transform: `translateX(-${mainStore.sliderStore.fullTranslate}%)`
-//         }}
-//       >
-//         {
-//           props.filteredItems.length > 0 &&
-//           props.filteredItems
-//             .map((item) => (
-//               <SliderItem
-//                 key={item?.warship.id}
-//                 sliderItemStore={item}
-//                 // isActive={item.isActive}
-//                 // index={index}
-//               />
-//             ))
-//         }
-//       </div>
-//     </div>
-//     <button
-//       className={`${sliderStyles.button} ${sliderStyles.button_right}`}
-//       disabled={mainStore.sliderStore.activeIndex === maxIndex || props.filteredItems.length < 1 || props.filteredItems.length < 6}
-//       onClick={() => {
-//         setNewIndex(mainStore.sliderStore.activeIndex + 1);
-//         setRestWidthInPxClickRight();
-//       }}
-//     />
-//   </>
-// }
-// : <p className={sliderStyles.text}>Nothing was found</p>
+export default Slider

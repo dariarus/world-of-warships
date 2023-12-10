@@ -36,12 +36,16 @@ export const Filters = () => {
     mainStore.filtersDataStore.getFilteredData(mainStore.sliderItemStores);
     mainStore.sliderStore.setActiveIndex(0);
     mainStore.sliderStore.setFullTranslate(0);
+    mainStore.sliderStore.resetVisibleSliderItems();
+    mainStore.fullWarshipsListStore.resetVisibleFullListItems();
   }
 
   const handleOnResetFilters = () => {
     mainStore.filtersDataStore.resetFilters(mainStore.sliderItemStores);
     mainStore.sliderStore.setActiveIndex(0);
     mainStore.sliderStore.setFullTranslate(0);
+    mainStore.sliderStore.resetVisibleSliderItems();
+    mainStore.fullWarshipsListStore.resetVisibleFullListItems();
     setLevelValue(initialFieldsValue);
     setNationValue(initialFieldsValue);
     setTypeValue(initialFieldsValue);
