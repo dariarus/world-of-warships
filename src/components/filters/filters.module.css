@@ -1,7 +1,6 @@
 .filters-wrap {
   align-self: flex-start;
   display: flex;
-  /*margin: 0 0 20px;*/
   max-width: 1440px;
   z-index: 5;
 }

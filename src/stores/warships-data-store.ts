@@ -16,8 +16,8 @@ export class WarshipsDataStore {
   isError: boolean = false;
   error: TError = {}
 
-  /* Для теста:
-    get wships() { return this.warships.slice(0, 20) } */
+  // Для теста:
+  //  get wships() { return this.warships.slice(0, 20) }
 
   /* Декораторы на момент работы над проектом не работают: @observable-поля не проксируются
   Использована функция для автоматического добавления нужных декораторов для всех полей и методов:*/

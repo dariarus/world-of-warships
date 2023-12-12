@@ -6,6 +6,8 @@ import appStyles from './app.module.css';
 import mainStore from '../../stores';
 import {SliderItemStore} from '../../stores/slider-item-store';
 
+import {Preloader} from '../preloader/preloader';
+import {ErrorInfo} from '../error-info/error-info';
 import {WarshipsInfoContainer} from '../warships-info-container/warships-info-container';
 import {Sidebar} from '../sidebar/sidebar';
 const Slider = lazy(() => import('../slider/slider'));
@@ -16,10 +18,6 @@ import {getWarshipsToShow} from '../../utils/functions';
 import {SliderItemActivator} from '../../types/data';
 
 const App: FunctionComponent = observer(() => {
-  const loading = () => {
-    return <div>Loading...</div>
-  }
-
   useEffect(() => {
     mainStore.warshipsDataStore.loadWarships();
   }, [])
@@ -56,6 +54,14 @@ const App: FunctionComponent = observer(() => {
       return getWarshipsToShow(mainStore.filtersDataStore.filteredWarships, mainStore.filtersDataStore.visibleItems);
   }, [mainStore.filtersDataStore.filteredWarships, mainStore.filtersDataStore.visibleItems])
 
+  if (mainStore.warshipsDataStore.isLoading) {
+    return <Preloader/>
+  }
+
+  if (mainStore.warshipsDataStore.isError) {
+    return <ErrorInfo message={mainStore.warshipsDataStore.error.message}/>
+  }
+
   return (
     <div className={appStyles.wrap}>
       <header className={appStyles.header}>
@@ -68,7 +74,7 @@ const App: FunctionComponent = observer(() => {
           <Sidebar
             sidebarIsOpen={mainStore.fullWarshipsListStore.listIsOpen}
           >
-            <Suspense fallback={loading()}>
+            <Suspense fallback={<Preloader/>}>
               {
                 mainStore.fullWarshipsListStore.listIsOpen
                   ? <FullWarshipsList items={setWarshipsToShow()}/>
